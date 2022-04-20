@@ -1,0 +1,196 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Invoice</title>
+    <link rel="stylesheet" href="{% static 'cssMain/bootstrap.min.css' %}">
+
+    <style>
+        body {
+            margin: 25px;
+        }
+        tr td:nth-child(5) {
+    text-align: right;
+
+}
+        .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+            padding: 5px;
+            line-height: 1.22857143;
+            vertical-align: top;
+            border-top: 1px solid #ddd;
+                font-size: 11px!important;
+        }
+.blank_row{
+    height: 25px;
+}
+        @page {
+            size: A5;
+            margin-top: 2mm;
+            margin-right: 5mm;
+            margin-bottom: 2mm;
+            margin-left: 5mm;
+
+        }
+
+        @media print {
+            body {
+               margin-top: 2mm;
+            margin-right: 5mm;
+            margin-bottom: 2mm;
+            margin-left: 5mm;
+            }
+
+            p {
+                font-size: 12px;
+            }
+
+
+        }
+    </style>
+    <script src="{% static 'jsMain/jquery.min.js' %}"></script>
+</head>
+<body onload="myFunction()">
+<div class="row ">
+    <p class="text-center " style="font-weight: bold;margin: 0"><u>BILL</u></p>
+</div>
+<div class="row">
+    <div class="col-xs-7 text-center">
+        <h4 style="font-family: serif;font-weight: bold;">M/S. STAR TRADER</h4>
+        <p style="font-weight: 400;margin: 0">Naoremthong, Near Takyel Industrial Estate</p>
+        <p style="font-weight: 400"><u>Deals in : MS Pipe,CR Sheet, SGI Sheets & Roofing Materials etc.</u></p>
+    </div>
+    <div class="col-xs-5">
+        <p style="margin: 0;font-weight: bold;">GSTIN : 14CCNPS0530E2ZT</p>
+        <p style="margin: 0;font-weight: bold;">State : Manipur</p>
+        <p style="font-weight: bold;">Code : 14</p>
+        <p>Bill No. : {{ sale.pk|stringformat:"05d"  }}</p>
+
+    </div>
+</div>
+<div class="row">
+    <p class="text-right" style="margin: 0">Date: <span style="border-bottom: 1px dotted">{{ sale.invoiceDate|date:"d-m-Y"  }}</span></p>
+    <p class="text-left"> Buyer's Name: <span style="width: 100%;border-bottom: 1px dotted"> {{ sale.customerName|capfirst }}</span></p>
+    <p class="text-left" style="margin: 0"> Address: <span
+            style="width: 100%;border-bottom: 1px dotted">{{ sale.customerAddress|capfirst }}</span></p>
+    <table class="table table-bordered">
+
+        <thead>
+        <tr>
+            <th>Sl No.</th>
+            <th>Product Description</th>
+            <th>Qnty.</th>
+            <th>Rate</th>
+            <th style="text-align: right">Amount</th>
+        </tr>
+
+        </thead>
+        <tbody>
+{% for foo in saleProduct %}
+
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ foo.productName }}</td>
+            <td>{{ foo.quantity }} {{ foo.unit }}</td>
+            <td>{{ foo.rate }}</td>
+            <td>{{ foo.total }}</td>
+        </tr>
+{% endfor %}
+
+         <tr class="blank_row">
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th style="text-align: right"></th>
+        </tr>
+{% if left > 0 %}
+    {% for l in loo %}
+     <tr class="blank_row">
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th style="text-align: right"></th>
+        </tr>
+    {% endfor %}
+
+
+{% endif %}
+
+
+
+       <tr>
+            <td rowspan="2" colspan="2">
+                    In words: <span style="border-bottom: 1px dotted"> {{ TotalInWords }}</span>
+            </td>
+            <td colspan="2" rowspan="2">Sub Total</td>
+            <td class="text-right" rowspan="2">{{ sale.subTotal }}</td>
+        </tr>
+        <tr>
+
+        </tr>
+        <tr>
+            <td rowspan="3" colspan="2">
+                <div class="row">
+                    <div class="col-xs-3"> Mode of Payments:</div>
+                    <div class="col-xs-9">
+                        <li>Cheque No. : <span style="border-bottom: 1px dotted"></span></li>
+                        <li>Draft No.:</li>
+                        <li>RTGS/NEFT.:</li>
+                    </div>
+                </div>
+            </td>
+            <td colspan="2" rowspan="3">Other Charges</td>
+            <td class="text-right" rowspan="3">{{ sale.otherCharges }}</td>
+        </tr>
+        <tr>
+
+        </tr>
+<tr>
+
+        </tr>
+        <tr>
+            <td rowspan="3" colspan="2">
+                <div class="row">
+                    <div class="col-xs-3"> Declaration:</div>
+                    <div class="col-xs-9">
+                        <li>All dispute subject to Manipur Jurisdiction only.</li>
+                        <li>Goods once sold will be not taken back.</li>
+                    </div>
+                </div>
+
+
+            </td>
+
+            <td colspan="2">Round Off (+/-)</td>
+            <td class="text-right">{{ sale.roundOff }}</td>
+        </tr>
+        <tr>
+            <td colspan="2">Discount (-)</td>
+            <td class="text-right">{{ sale.personalDiscount }}</td>
+        </tr><tr>
+            <td colspan="2">Total Amount</td>
+            <td class="text-right">{{ sale.grandTotal }}</td>
+        </tr>
+
+        </tbody>
+    </table>
+
+
+</div>
+
+<div class="row text-right" style="margin-top: 30px;">
+    <p style="padding-right: 60px;margin: 0">For,</p>
+    <p style="padding-right: 25px;"> <b>M/s. Star Trader</b></p>
+</div>
+<script>
+    function myFunction() {
+        window.print();
+
+    }
+</script>
+</body>
+</html>

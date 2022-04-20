@@ -1,0 +1,262 @@
+{% extends 'home/settings.html' %}
+{% block title %}
+         <title>Ware House</title>
+    {% endblock %}
+
+{% block setting %}
+<style>
+    #hsnTable_filter, #categoryTable_filter{
+            position: absolute;
+           top: 160px;
+            right: 35px;
+
+    }
+    </style>
+    <div class="ui segment">
+                <div class="ui bottom attached segment">
+
+                        <h4 class="ui dividing header" style="font-size: x-large; color: #1976d2">PRODUCT WARE-HOUSE</h4>
+                        <form class="ui tiny form" id="categoryForm">{% csrf_token %}
+                        <div class="three fields">
+
+                            <div class="field">
+                                <label style="font-size: small">Ware-House Name</label>
+                                <input type="text" name="WareHouseName" id="WareHouseName" placeholder="Name">
+                            </div>
+
+                             <div class="field">
+                                <label style="font-size: small">Address</label>
+                                <input type="text" name="WareHouseAddress" id="WareHouseAddress" placeholder="Address">
+                            </div>
+
+                             {% comment %}<div class="field">
+                                <label style="font-size: small">Date</label>
+                                <div class="ui search">
+                                    <div class="ui icon input">
+                                       <form action="/">
+                                           <input type = "date">
+                                        </form>
+
+                                    </div>
+                                    <div class="results"></div>
+                                </div>
+                            </div>{% endcomment %}
+
+                            <div class="field" style="padding-top: 1.666em;">
+                                <button type="button" class="ui green button" onclick="AddWareHouse()">
+                                    <i class="icon plus square"></i>
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <table class="ui sortable selectable compact celled table" id="WareHouseTable" style="margin-top: 5px;">
+                    <thead>
+                    <tr>
+                        <th class="">Ware House</th>
+                        <th class="">Address</th>
+                        <th class="">Date</th>
+                        <th class="">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="ui basic modal custom" id="delWareHouse">
+  <div class="ui icon header">
+    <i class="archive icon"></i>
+    Ware House will be Deleted
+  </div>
+  <div class="content">
+    <p style="text-align: center">The Ware House detail will be deleted, are you sure to delete this Ware House?</p>
+  </div>
+  <div class="actions">
+    <div class="ui red basic cancel inverted button">
+      <i class="remove icon"></i>
+      No
+    </div>
+      <input type="hidden" id="WareHouseID">
+    <div class="ui green ok inverted button" onclick="deleteWareHouse()">
+      <i class="checkmark icon"></i>
+      Yes
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        function AddWareHouse() {
+             var WareHouseName = $('#WareHouseName').val();
+             var WareHouseAddress = $('#WareHouseAddress').val();
+
+             if (WareHouseName === '' || WareHouseAddress === '' ) {
+                 $('body')
+                     .toast({
+                         class: 'orange',
+                         message: `Ware House Name and Address Number are required !`
+                     })
+                 ;
+             } else {
+
+                 var csrfmiddlewaretoken = $("input[name='csrfmiddlewaretoken']").val();
+
+                 data = new FormData();
+                 data.append('WareHouseName', WareHouseName);
+                 data.append('WareHouseAddress', WareHouseAddress);
+
+                 data.append('csrfmiddlewaretoken', csrfmiddlewaretoken);
+
+                 $.ajax({
+                     type: 'post',
+                     url: '/api/add_warehouse/',
+                     data: data,
+                     contentType: false,
+                     cache: false,
+                     processData: false,
+
+
+                     success: function (response) {
+                         if (response.message === 'success') {
+                             {#$('#myModal').modal('hide');#}
+                             {#$("#AddCompanyForm")[0].reset();#}
+                             $('body')
+                                 .toast({
+                                     class: 'success',
+                                     message: `Ware-House Added Successfully.`
+                                 })
+                             ;
+
+
+                             wareHouseTab.ajax.reload();
+                             $('#formtest').trigger('reset')
+                         } else {
+                             $('body')
+                                 .toast({
+                                     class: 'error',
+                                     message: `An error occured !`
+                                 })
+                             ;
+
+                         }
+
+                         return response;
+                     },
+                     error: function () {
+                         $('body')
+                             .toast({
+                                 class: 'error',
+                                 message: `An error occured !`
+                             })
+                         ;
+                     }
+                 });
+
+
+             }
+
+         }
+
+         //wareHouseList
+            $(getWareHouses());
+       var wareHouseTab;
+        function getWareHouses() {
+            wareHouseTab = $('#WareHouseTable').DataTable({
+                dom: 'Blfrtip',
+                "scrollY":"245px",
+                buttons: [{
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [0, 1, 2,3,4]
+                    }},{
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2,3,4]
+                    }}
+                ],
+                "columnDefs": [
+                    {"name": "wareHouseName", "targets": 0, "orderable": true},
+                    {"name": "wareHouseAddress", "targets": 1, "orderable": true},
+                    {"name": "datetime", "targets": 2, "orderable": true},
+                    {"name": "action", "targets": 3, "orderable": false},
+                ],
+                aaSorting: [[0, 'asc']],
+                "lengthMenu": [[8, 25, 50, 100, -1], [8, 25, 50, 100, "All"]],
+                "pageLength": 8,
+                "processing": true,
+                "serverSide": true,
+                "ajax": "{% url 'homeApp:WareHouseListJson' %}"
+            });
+        }
+
+    //For Delete
+       function delWareHouse(id) {
+   $('#delWareHouse')
+  .modal('show')
+;
+   $('#WareHouseID').val(id)
+}
+
+    function deleteWareHouse() {
+    var id = $('#WareHouseID').val();
+
+    var formdata = new FormData();
+    formdata.append('WareHouseID', id);
+    debugger;
+
+     $.ajax({
+                    url: "/api/delete_wareHouse/",
+                    type: "post",
+                    data: formdata,
+             contentType: false,
+                         cache: false,
+                         processData: false,
+
+                     success: function (response) {
+                         if (response.message === 'success') {
+                             $('body')
+                                 .toast({
+                                     class: 'success',
+                                     message: `User Deleted Successfully.`
+                                 })
+                             ;
+
+                             wareHouseTab.ajax.reload();
+                         } else {
+                             $('body')
+                                 .toast({
+                                     class: 'error',
+                                     message: `An error occured !`
+                                 })
+                             ;
+
+                         }
+
+                         return response;
+                     },
+                     error: function () {
+                         $('body')
+                             .toast({
+                                 class: 'error',
+                                 message: `An error occured !`
+                             })
+                         ;
+                     }
+                            });
+
+}
+
+    </script>
+{% endblock %}

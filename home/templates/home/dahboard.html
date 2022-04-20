@@ -1,0 +1,251 @@
+{% extends 'home/index.html' %}
+{% block title %}
+    <title>Dashboard</title>
+{% endblock %}
+
+
+{% block body %}
+<h2 class="ui center aligned icon header">
+  <i class="chart pie    icon"></i>
+  DashBoard
+</h2>
+<div style="padding-left: 20px; padding-right: 20px;" class="ui four cards">
+    <div class="ui raised card crd">
+        <div class="content">
+            <button class="right floated ui circular gift icon button"  style="color: #0d71bb">
+                <i class="right floated gift icon" ></i>
+                </button>
+             <div class="header" style="color: #0d71bb">Purchase</div>
+            <div class="description">
+                <div class="ui orange statistic">
+                    <div class="value">{{ purchases }}</div>
+                    <div class="label">Today Purchase</div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <div class="ui raised card crd">
+        <div class="content">
+            <button class="right floated ui circular chart line icon button">
+                <i class="right floated chart line icon" style="color: #0d71bb"></i>
+                </button>
+
+             <div class="header"  style="color: #0d71bb">Sales</div>
+            <div class="description">
+                <div class="ui purple statistic">
+                    <div class="value">{{ sales }}</div>
+                    <div class="label">Today Sale</div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <div class="ui raised card crd">
+        <div class="content">
+             <button class="right floated ui circular balance scale left icon button">
+                <i class="right floated balance scale left icon" style="color: #0d71bb"></i>
+                </button>
+
+             <div class="header"  style="color: #0d71bb">Expense</div>
+            <div class="description">
+                <div class="ui green statistic">
+                    <div class="value">{{ expenses }}</div>
+                    <div class="label">Today Expense</div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <div class="ui raised card crd">
+        <div class="content">
+            <button class="right floated ui circular user friends icon button">
+                <i class="right floated user friends icon" style="color: #0d71bb"></i>
+                </button>
+
+             <div class="header"  style="color: #0d71bb">Customer</div>
+            <div class="description">
+                <div class="ui red statistic">
+                    <div class="value">{{ new_customer }}</div>
+                    <div class="label">Today New Customer</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="padding-left: 20px; padding-right: 20px" class="ui four cards">
+    <div class="ui raised card crd">
+        <div class="content">
+             <button class="right floated ui circular seedling icon button">
+                <i class="right floated seedling icon" style="color: #0d71bb"></i>
+                </button>
+             <div class="header"  style="color: #0d71bb">Suppliers</div>
+            <div class="description">
+                <div class="ui yellow statistic">
+                    <div class="value">{{ supplier_count }}</div>
+                    <div class="label">Total Suppliers</div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <div class="ui raised card crd">
+        <div class="content">
+
+                <button class="right floated ui circular dollar sign icon button">
+                <i class="right floated dollar sign icon" style="color: #0d71bb"></i>
+                </button>
+             <div class="header"  style="color: #0d71bb">Purchase</div>
+            <div class="description">
+                <div class="ui blue statistic">
+                    <div class="value">{{ purchase_count }}</div>
+                    <div class="label">Total No.of Purchase</div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <div class="ui raised card crd">
+        <div class="content">
+            <button class="right floated ui circular passport icon button">
+               <i class="right floated passport icon" style="color: #0d71bb"></i>
+                </button>
+
+             <div class="header"  style="color: #0d71bb">Sales</div>
+            <div class="description">
+                <div class="ui olive statistic">
+                    <div class="value">{{ sales_count }}</div>
+                    <div class="label">Total No. of Sales</div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <div class="ui raised card crd">
+        <div class="content">
+             <button class="right floated ui circular user alternate icon button">
+               <i class="right floated user alternate icon" style="color: #0d71bb"></i>
+                </button>
+             <div class="header"  style="color: #0d71bb">Customer</div>
+            <div class="description">
+                <div class="ui pink statistic">
+                    <div class="value">{{ customer_count }}</div>
+                    <div class="label">Total Customers</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Two Chart/Graph--->
+{% comment %}
+
+<div style="padding-left: 20px; padding-right: 20px" class="ui two cards">
+    <div class="ui raised card crd">
+        <h3 style="padding-left: 20px;padding-top: 4px;">Sales Analysis(DEMO)</h3>
+        <div class="content">
+            <canvas id="salesChart" height="400" width="1230"></canvas>
+        </div>
+    </div>
+      <div class="ui raised card crd">
+          <h3 style="padding-left: 20px;padding-top: 4px">Purchase Analysis(DEMO)</h3>
+        <div class="content">
+            <canvas id="purchaseChart" height="400" width="1230"></canvas>
+        </div>
+      </div>
+</div>
+{% endcomment %}
+
+{% endblock %}
+
+{% block js %}
+{#    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>#}
+
+
+{% comment %}<script>
+var ctx = document.getElementById('salesChart').getContext('2d');
+var salesChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday','Sunday'],
+        datasets: [{
+            label: '# Sales Analysis',
+            data: [10, 19, 15, 5, 7, 21,25],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+<!--Product Chart JS--->
+<script>
+    var ctx = document.getElementById('purchaseChart').getContext('2d');
+    var mychart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+            label: 'Product',
+
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 100, 200, 300, 400, 500]
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+</script>{% endcomment %}
+{% endblock %}
+{% comment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.7.5/dist/semantic.min.css">
+</head>
+
+<style>
+body{
+    background-color: #dcdafa;
+}
+.crd{
+    margin-top: 10px !important;
+}
+
+</style>
+
+<body>
+
+
+
+<!--Sales Chart JS--->
+
+</body>
+</html>
+{% endcomment %}

@@ -1,0 +1,612 @@
+{% extends 'home/index.html' %}
+ {% block title %}
+         <title>Report</title>
+    {% endblock %}
+<style>
+    .cwide {
+            width: 75% !important;
+        }
+</style>
+
+{% block body %}
+    <div class="ui top attached tabular menu">
+        <a class="item active" data-tab="first">Sales Report</a>
+        <a class="item " data-tab="second">Purchase Report</a>
+        <a class="item" data-tab="fourth">Expense Report</a>
+    </div>
+        <div class="ui bottom attached tab segment active" data-tab="first">
+                    <div class="ui right aligned basic segment">
+                 <div class="ui internally grid">
+                    <div class="row" style="padding-bottom: 0!important;padding-top: 0!important;">
+                        <div class="five wide column">
+                          <div class="ui form">
+                            <div class="ui form">
+                                <div class="inline fields">
+
+                                    <i class="edit pay icon"></i>
+                                    <label for="fruit">Report By: </label>
+                                    <div class="field">
+                                        <div class="ui radio checkbox checked">
+                                            <input type="radio" name="fruit" checked="" tabindex="0" class="hidden" onchange="confirmDateMonth(1)">
+                                            <label>Date</label>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="fruit" tabindex="0" class="hidden" onchange="confirmDateMonth(2)">
+                                            <label>Month</label>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="fruit" tabindex="0" class="hidden" onchange="confirmDateMonth()">
+                                            <label>Custom Date</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <form class="ui tiny form">
+                                <div class="field inline" id="standard_calendar">
+                                <span style="float: left">
+                                <i class="calendar icon"></i>
+                                <label>Date</label>
+                                    </span>
+                                    <input style="float: left" class="cwide" type="text" name="nainvoiceme" placeholder="Date">
+                                </div>
+                                <div class="field inline" id="standard_month" hidden>
+                                <span style="float: left">
+                                <i class="calendar alternate outline icon"></i>
+                                <label>Month</label>
+                                </span>
+                                    <div class="two fields" style="float: right;width: 77.5%!important;">
+                                        <div class="field">
+
+                                            <select class="dropdown">
+                                                <option value="" hidden selected>Month</option>
+                                                <option value="January">January</option>
+                                                <option value="February">February</option>
+                                                <option value="March">March</option>
+                                                <option value="April">April</option>
+                                                <option value="May">May</option>
+                                                <option value="June">June</option>
+                                                <option value="July">July</option>
+                                                <option value="August">August</option>
+                                                <option value="September">September</option>
+                                                <option value="October">October</option>
+                                                <option value="November">November</option>
+                                                <option value="December">December</option>
+                                            </select>
+                                        </div>
+                                        <div class="field">
+                                            <select class=" dropdown">
+                                                <option value="" hidden selected>Year</option>
+                                                <option value="2019">2019</option>
+                                                <option value="2018">2018</option>
+                                                <option value="2017">2017</option>
+                                                <option value="2016">2016</option>
+                                                <option value="2015">2015</option>
+                                                <option value="2014">2014</option>
+                                                <option value="2013">2013</option>
+                                                <option value="2012">2012</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field inline" id="custom_date" hidden >
+                                <span style="float: left">
+                                <i class="calendar alternate icon"></i>
+                                <label>Custom Date</label>
+                                </span>
+                                    <div class="two fields" style="float: right;width: 77% !important;">
+                                        <div class="field">
+                                            <div class="ui calendar" id="rangestart">
+                                                <div class="ui input left icon">
+                                                    <input style="width: 75%" class="cwide" type="text" placeholder="Start">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="ui calendar" id="rangeend">
+                                                <div class="ui input left icon">
+                                                    <input style="width: 75%" class="cwide" type="text" placeholder="End">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui internally celled grid">
+                <div class="row" style="padding-top: 15px">
+                    <div class="sixteen wide column">
+                        <table class="ui very compact sortable  celled table">
+                            <thead>
+                            <tr>
+                                <th>Sl No.</th>
+                                <th>Date</th>
+                                <th>Cust. Name</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>PayBy</th>
+                                <th>Payment Status</th>
+                                <th>Cheque No.</th>
+                                <th>Cheque Date</th>
+                                <th>Credit Period</th>
+                                <th>Profit</th>
+                                <th>Profit %</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Approved</td>
+                                <td>Approved</td>
+                                <td>None</td>
+                                <td>None</td>
+                                <td>None</td>
+                                <td>None</td>
+                                <td>None</td>
+                                <td>None</td>
+                                <td>None</td>
+                                <td>None</td>
+                                <td>None</td>
+
+                            </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+                    </div>
+        </div>
+
+        <div class="ui bottom attached tab segment" data-tab="second">
+                     <div class="ui right aligned basic segment">
+            <div class="ui internally grid">
+                <div class="row" style="padding-bottom: 0!important;padding-top: 0!important;">
+                    <div class="five wide column">
+                        <div class="ui form">
+                            <div class="ui form">
+                                <div class="inline fields">
+
+                                    <i class="edit pay icon"></i>
+                                    <label for="fruit">Report By: </label>
+                                    <div class="field">
+                                        <div class="ui radio checkbox checked">
+                                            <input type="radio" name="fruit" checked="" tabindex="0" class="hidden" onchange="confirmDateMonth_1(1)">
+                                            <label>Date</label>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="fruit" tabindex="0" class="hidden" onchange="confirmDateMonth_1(2)">
+                                            <label>Month</label>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="fruit" tabindex="0" class="hidden" onchange="confirmDateMonth_1(3)">
+                                            <label>Custom Date</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <form class="ui tiny form">
+                                <div class="field inline" id="standard_calendar_1">
+                                <span style="float: left">
+                                <i class="calendar icon"></i>
+                                <label>Date</label>
+                                    </span>
+                                    <input style="float: left" class="cwide" type="text" name="nainvoiceme" placeholder="Date">
+                                </div>
+                                <div class="field inline" id="standard_month_1" hidden>
+                                <span style="float: left">
+                                <i class="calendar alternate outline icon"></i>
+                                <label>Month</label>
+                                </span>
+                                    <div class="two fields" style="float: right;width: 77.5%;">
+                                        <div class="field">
+
+                                            <select class="dropdown">
+                                                <option value="" hidden selected>Month</option>
+                                                <option value="January">January</option>
+                                                <option value="February">February</option>
+                                                <option value="March">March</option>
+                                                <option value="April">April</option>
+                                                <option value="May">May</option>
+                                                <option value="June">June</option>
+                                                <option value="July">July</option>
+                                                <option value="August">August</option>
+                                                <option value="September">September</option>
+                                                <option value="October">October</option>
+                                                <option value="November">November</option>
+                                                <option value="December">December</option>
+                                            </select>
+                                        </div>
+                                        <div class="field">
+                                            <select class=" dropdown">
+                                                <option value="" hidden selected>Year</option>
+                                                <option value="2019">2019</option>
+                                                <option value="2018">2018</option>
+                                                <option value="2017">2017</option>
+                                                <option value="2016">2016</option>
+                                                <option value="2015">2015</option>
+                                                <option value="2014">2014</option>
+                                                <option value="2013">2013</option>
+                                                <option value="2012">2012</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field inline" id="custom_date_1" hidden >
+                                <span style="float: left" >
+                                <i class="calendar alternate icon"></i>
+                                <label>Custom Date</label>
+                                </span>
+                                    <div class="two fields" style="float: right;width: 77% !important;">
+                                        <div class="field">
+                                            <div class="ui calendar" id="rangestart_1">
+                                                <div class="ui input left icon">
+                                                    <input style="width: 75px" class="cwide" type="text" placeholder="Start">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="ui calendar" id="rangeend_1">
+                                                <div class="ui input left icon">
+                                                    <input style="width: 75px"  class="cwide" type="text" placeholder="End">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui internally celled grid">
+                <div class="row" style="padding-top: 15px">
+                    <div class="sixteen wide column">
+                        <table class="ui very compact sortable  celled table">
+                            <thead>
+                            <tr>
+                                <th>Sl No.</th>
+                                <th>Date</th>
+                                <th>Vendor Name</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                                <th>PayBy</th>
+                                <th>Payment Status</th>
+                                <th>Cheque No.</th>
+                                <th>Cheque Date</th>
+                                <th>Credit Period</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Approved</td>
+                                <td>Approved</td>
+                                <td>None</td>
+                                <td>None</td>
+                                <td>None</td>
+                                <td>None</td>
+                                <td>None</td>
+                                <td>None</td>
+                                <td>None</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </div>
+        </div>
+
+
+    </div>
+
+        <div class="ui bottom attached tab segment" data-tab="fourth">
+        <div class="ui right aligned basic segment">
+            <div class="ui internally grid">
+                <div class="row" style="padding-bottom: 0!important;padding-top: 0!important;">
+                        <div class="five wide column">
+                            <div class="ui form">
+                                <div class="inline fields">
+                                    <i class="edit pay icon"></i>
+                                    <label for="fruit">Report By: </label>
+                                    <div class="field">
+                                        <div class="ui radio checkbox checked">
+                                            <input type="radio" name="fruit" checked="" tabindex="0" class="hidden" onchange="confirmDateMonth_3(1)">
+                                            <label>Date</label>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="fruit" tabindex="0" class="hidden" onchange="confirmDateMonth_3(2)">
+                                            <label>Month</label>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="fruit" tabindex="0" class="hidden" onchange="confirmDateMonth_3()">
+                                            <label>Custom Date</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <form class="ui tiny form">
+                                <div class="field inline" id="standard_calendar_3">
+                                <span style="float: left">
+                                <i class="calendar icon"></i>
+                                <label>Date</label>
+                                    </span>
+                                    <input style="float: left" class="cwide" type="text" name="nainvoiceme" placeholder="Date">
+                                </div>
+                                <div class="field inline" id="standard_month_3" hidden>
+                                <span style="float: left">
+                                <i class="calendar alternate outline icon"></i>
+                                <label>Month</label>
+                                </span>
+                                    <div class="two fields" style="float: right;width: 77.5%;">
+                                        <div class="field">
+
+                                            <select class="dropdown">
+                                                <option value="" hidden selected>Month</option>
+                                                <option value="January">January</option>
+                                                <option value="February">February</option>
+                                                <option value="March">March</option>
+                                                <option value="April">April</option>
+                                                <option value="May">May</option>
+                                                <option value="June">June</option>
+                                                <option value="July">July</option>
+                                                <option value="August">August</option>
+                                                <option value="September">September</option>
+                                                <option value="October">October</option>
+                                                <option value="November">November</option>
+                                                <option value="December">December</option>
+                                            </select>
+                                        </div>
+                                        <div class="field">
+                                            <select class=" dropdown">
+                                                <option value="" hidden selected>Year</option>
+                                                <option value="2019">2019</option>
+                                                <option value="2018">2018</option>
+                                                <option value="2017">2017</option>
+                                                <option value="2016">2016</option>
+                                                <option value="2015">2015</option>
+                                                <option value="2014">2014</option>
+                                                <option value="2013">2013</option>
+                                                <option value="2012">2012</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field inline" id="standard_date_3" hidden >
+                                <span style="float: left">
+                                <i class="calendar alternate icon"></i>
+                                <label>Custom Date</label>
+                                </span>
+                                    <div class="two fields" style="float: right;width: 77%">
+                                        <div class="field">
+                                            <div class="ui calendar" id="rangestart_3">
+                                                <div class="ui input left icon">
+                                                    <input style="width: 75%" class="cwide" type="text" placeholder="Start">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="ui calendar" id="rangeend_3">
+                                                <div class="ui input left icon">
+                                                    <input style="width: 75%" class="cwide" type="text" placeholder="End">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="ui internally celled grid">
+                                <div class="row" style="padding-top: 15px">
+                                    <div class="sixteen wide column">
+                                        <table class="ui very compact sortable  celled table">
+                                            <thead>
+                                            <tr>
+                                                <th>Sl No.</th>
+                                                <th>Date</th>
+                                                <th>Description</th>
+                                                <th>Vendor Name</th>
+                                                <th>Amount</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>12/02/2019</td>
+                                                    <td>Electric Bill</td>
+                                                    <td>None</td>
+                                                    <td>1500</td>
+                                                </tr>
+                                                </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+        </div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="https://semantic-ui.com/javascript/library/tablesort.js"></script>
+
+    <script>
+    $('.menu .item')
+        .tab()
+        ;
+    </script>
+
+<!--Sales Report JS -->
+    <script>
+
+        $("#standard_calendar").show();
+        $("#standard_month").hide();
+        $("#custom_date").hide();
+
+        $('table').tablesort();
+        $('.ui.radio.checkbox')
+            .checkbox();
+        $('#standard_calendar')
+            .calendar({
+                    type: 'date'
+                }
+            );
+        $('#rangestart').calendar({
+            type: 'date',
+            endCalendar: $('#rangeend')
+        });
+        $('#rangeend').calendar({
+            type: 'date',
+            startCalendar: $('#rangestart')
+        });
+        function confirmDateMonth(a) {
+            $("#standard_calendar").hide();
+            $("#standard_month").hide();
+            $("#custom_date").hide();
+
+                if(a==1) $("#standard_calendar").show();
+
+                else if (a==2) $("#standard_month").show();
+
+                else $("#custom_date").show();
+    }
+    </script>
+<!--Purchase Report JS -->
+    <script>
+
+        $("#standard_calendar_1").show();
+        $("#standard_month_1").hide();
+        $("#custom_date_1").hide();
+
+        $('table').tablesort();
+        $('.ui.radio.checkbox')
+            .checkbox();
+        $('#standard_calendar_1')
+            .calendar({
+                    type: 'date'
+                }
+            );
+        $('#rangestart_1').calendar({
+            type: 'date',
+            endCalendar: $('#rangeend_1')
+        });
+        $('#rangeend_1').calendar({
+            type: 'date',
+            startCalendar: $('#rangestart_1')
+        });
+        function confirmDateMonth_1(a) {
+            $("#standard_calendar_1").hide();
+            $("#standard_month_1").hide();
+            $("#custom_date_1").hide();
+
+                if(a==1) $("#standard_calendar_1").show();
+
+                else if (a==2) $("#standard_month_1").show();
+
+                else $("#custom_date_1").show();
+    }
+    </script>
+<!--Product Report JS -->
+    <script>
+
+        $("#standard_calendar_2").show();
+        $("#standard_month_2").hide();
+        $("#custom_date_2").hide();
+
+        $('table').tablesort();
+        $('.ui.radio.checkbox')
+            .checkbox();
+        $('#standard_calendar_2')
+            .calendar({
+                    type: 'date'
+                }
+            );
+        $('#rangestart_2').calendar({
+            type: 'date',
+            endCalendar: $('#rangeend_2')
+        });
+        $('#rangeend_2').calendar({
+            type: 'date',
+            startCalendar: $('#rangestart_2')
+        });
+        function confirmDateMonth_2(a) {
+            $("#standard_calendar_2").hide();
+            $("#standard_month_2").hide();
+            $("#custom_date_2").hide();
+
+                if(a==1) $("#standard_calendar_2").show();
+
+                else if (a==2) $("#standard_month_2").show();
+
+                else $("#custom_date_2").show();
+    }
+    </script>
+<!--Expense Report JS -->
+     <script>
+
+        $("#standard_calendar_3").show();
+        $("#standard_month_3").hide();
+        $("#custom_date_3").hide();
+
+        $('table').tablesort();
+        $('.ui.radio.checkbox')
+            .checkbox();
+        $('#standard_calendar_3')
+            .calendar({
+                    type: 'date'
+                }
+            );
+        $('#rangestart_3').calendar({
+            type: 'date',
+            endCalendar: $('#rangeend_3')
+        });
+        $('#rangeend_3').calendar({
+            type: 'date',
+            startCalendar: $('#rangestart_3')
+        });
+        function confirmDateMonth_3(a) {
+            $("#standard_calendar_3").hide();
+            $("#standard_month_3").hide();
+            $("#custom_date_3").hide();
+
+                if(a==1) $("#standard_calendar_3").show();
+
+                else if (a==2) $("#standard_month_3").show();
+
+                else $("#custom_date_3").show();
+    }
+    </script>
+
+{% endblock %}
+
