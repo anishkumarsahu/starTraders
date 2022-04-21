@@ -1916,16 +1916,18 @@ class SalesListJson(BaseDatatableView):
                              </button><button style="font-size:10px;" onclick = "GetSaleDetail('{}')" class="ui circular  icon button green">
                                <i class="receipt icon"></i>
                              </button>
-
+                    <button style="font-size:10px;" onclick ="editSaleDate('{}','{}')" class="ui circular olive icon button" style="margin-left: 3px">
+                                                   <i class="pen icon"></i>
+                                                 </button>
                         
 
                              <button style="font-size:10px;" onclick ="delSale('{}')" class="ui circular youtube icon button" style="margin-left: 3px">
                                <i class="trash alternate icon"></i>
-                             </button>'''.format(item.pk, item.pk, item.pk),
+                             </button>'''.format(item.pk, item.pk,item.invoiceDate.strftime('%d/%m/%Y'), item.pk, item.pk),
             else:
                 action = '''<button style="font-size:10px;" onclick = "GetSaleDetail('{}')" class="ui circular  icon button green">
                                                <i class="receipt icon"></i>
-                                             </button>'''.format(item.pk, item.pk, item.pk),
+                                             </button>'''.format(item.pk, item.pk, item.pk,item.pk),
 
             json_data.append([
                 escape(item.customerName),  # escape HTML for security reasons
@@ -4318,3 +4320,15 @@ def error_404(request, exception):
 def error_500(request, exception):
     data = {}
     return render(request, 'home/error/500.html', data)
+
+
+@csrf_exempt
+def change_sales_date(request):
+    if request.method == 'POST':
+        id = request.POST.get("ID")
+        uDate = request.POST.get("uDate")
+        sale = Sales.objects.get(pk=int(id))
+        sale.invoiceDate = datetime.strptime(uDate, '%d/%m/%Y')
+        sale.save()
+
+        return JsonResponse({'message': 'success'}, safe=False)

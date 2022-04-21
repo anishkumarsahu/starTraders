@@ -172,4 +172,7 @@ urlpatterns = [
     url(r'^BookingSale/(?P<id>[0-9]+)/$', BookingSale, name='BookingSale'),
     url(r'^api/add_sales_from_booking/$', add_sales_from_booking, name='add_sales_from_booking'),
 
+
+    url(r'^api/change_sales_date/$', change_sales_date, name='change_sales_date'),
+
 ]

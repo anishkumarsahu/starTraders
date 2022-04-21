@@ -14,12 +14,12 @@
             width: 75% !important;
         }
 
-        #purchaseTable_length,#purchaseTableProduct_length {
+        #purchaseTable_length, #purchaseTableProduct_length {
             left: 10px;
             position: absolute;
         }
 
-        #purchaseTable_filter,#purchaseTableProduct_filter {
+        #purchaseTable_filter, #purchaseTableProduct_filter {
             width: 75%;
             float: right;
         }
@@ -30,65 +30,67 @@
         }
     </style>
 
-        <div class="ui right aligned basic  grid">
+    <div class="ui right aligned basic  grid">
         <div class="sixteen wide column">
             <div class="ui  pointing secondary menu">
                 <div style="cursor: pointer;" class="item active" data-tab="customer">Sales By Customers</div>
                 <div style="cursor: pointer;" class="item" data-tab="product">Sales By Products</div>
             </div>
 
-              <div class="ui tab  active" data-tab="customer">
-                <div class="row" >
+            <div class="ui tab  active" data-tab="customer">
+                <div class="row">
 
-        <div class="ui internally grid">
-            <div class="row" style="padding-bottom: 0!important;padding-top: 5px!important;">
+                    <div class="ui internally grid">
+                        <div class="row" style="padding-bottom: 0!important;padding-top: 5px!important;">
 
-                <div class="eight wide column">
-                    <div class="ui form">
+                            <div class="eight wide column">
+                                <div class="ui form">
 
 
-                        <form class="ui tiny form">
+                                    <form class="ui tiny form">
 
-                            <div class="field inline" id="custom_date">
+                                        <div class="field inline" id="custom_date">
                             <span style="float: left;padding: 7px;">
                             <i class="calendar alternate icon"></i>
                             <label>Filter By Date Range</label>
                             </span>
-                                <div class="three fields">
-                                    <div class="field">
-                                        <div class="ui calendar" id="rangestart">
-                                            <div class="ui input left icon">
-                                                <input class="" type="text" placeholder="Start Date" style="width:100%;"
-                                                       id="startDateF">
+                                            <div class="three fields">
+                                                <div class="field">
+                                                    <div class="ui calendar" id="rangestart">
+                                                        <div class="ui input left icon">
+                                                            <input class="" type="text" placeholder="Start Date"
+                                                                   style="width:100%;"
+                                                                   id="startDateF">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="field">
+                                                    <div class="ui calendar" id="rangeend">
+                                                        <div class="ui input left icon">
+                                                            <input class="" type="text" placeholder="End Date"
+                                                                   style="width:100%;"
+                                                                   id="endDateF">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="field">
+                                                    <div class="ui calendar" id="rangeend">
+                                                        <div class="ui input left icon">
+                                                            <button class="ui tiny active button" type="button"
+                                                                    onclick="filterDetails()">
+                                                                <i class="funnel dollar icon"></i>
+                                                                Search
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui calendar" id="rangeend">
-                                            <div class="ui input left icon">
-                                                <input class="" type="text" placeholder="End Date" style="width:100%;"
-                                                       id="endDateF">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui calendar" id="rangeend">
-                                            <div class="ui input left icon">
-                                                <button class="ui tiny active button" type="button"
-                                                        onclick="filterDetails()">
-                                                    <i class="funnel dollar icon"></i>
-                                                    Search
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
 
-                </div>
-                {% comment %} <div class="two wide column" style="text-align: center">
+                            </div>
+                            {% comment %} <div class="two wide column" style="text-align: center">
                     <a href="">
                     <span>
                             <i class="funnel dollar icon" style="font-size: 2em"></i>
@@ -117,97 +119,100 @@
                 </div>
 
 {% endcomment %}
-            </div>
-        </div>
+                        </div>
+                    </div>
 
-        <div class="ui internally celled grid">
-            <div class="row">
-                <div class="sixteen wide column">
-                    <table id="purchaseTable" class="ui sortable celled very compact table" style="margin-top: 5px">
-                        <thead>
-                        <tr>
-                            <th>Customer</th>
-                            <th>Customer GST</th>
-                            <th>InvoiceDate</th>
-                            <th>BillNo.</th>
-                            <th>InvoiceNo.</th>
-                            <th>Total(₹)</th>
-                            <th>Paid(₹)</th>
-                            <th>Due(₹)</th>
-                            <th>PayType</th>
-                            <th>Company</th>
-                            <th>Type</th>
-                            <th>EnteredOn</th>
-                            <th>TakeAction</th>
+                    <div class="ui internally celled grid">
+                        <div class="row">
+                            <div class="sixteen wide column">
+                                <table id="purchaseTable" class="ui sortable celled very compact table"
+                                       style="margin-top: 5px">
+                                    <thead>
+                                    <tr>
+                                        <th>Customer</th>
+                                        <th>Customer GST</th>
+                                        <th>InvoiceDate</th>
+                                        <th>BillNo.</th>
+                                        <th>InvoiceNo.</th>
+                                        <th>Total(₹)</th>
+                                        <th>Paid(₹)</th>
+                                        <th>Due(₹)</th>
+                                        <th>PayType</th>
+                                        <th>Company</th>
+                                        <th>Type</th>
+                                        <th>EnteredOn</th>
+                                        <th>TakeAction</th>
 
-                        </tr>
-                        </thead>
-                        <tbody>
-
-
-                        </tbody>
-                    </table>
-                </div>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
 
-            </div>
-        </div>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+                    </div>
 
 
                 </div>
             </div>
             <div class="ui tab  " data-tab="product">
-                <div class="row" >
+                <div class="row">
 
-        <div class="ui internally grid">
-            <div class="row" style="padding-bottom: 0!important;padding-top: 5px!important;">
+                    <div class="ui internally grid">
+                        <div class="row" style="padding-bottom: 0!important;padding-top: 5px!important;">
 
-                <div class="eight wide column">
-                    <div class="ui form">
+                            <div class="eight wide column">
+                                <div class="ui form">
 
 
-                        <form class="ui tiny form">
+                                    <form class="ui tiny form">
 
-                            <div class="field inline" id="custom_date">
+                                        <div class="field inline" id="custom_date">
                             <span style="float: left;padding: 7px;">
                             <i class="calendar alternate icon"></i>
                             <label>Filter By Date Range</label>
                             </span>
-                                <div class="three fields">
-                                    <div class="field">
-                                        <div class="ui calendar" id="rangestartProduct">
-                                            <div class="ui input left icon">
-                                                <input class="" type="text" placeholder="Start Date" style="width:100%;"
-                                                       id="startDateProduct">
+                                            <div class="three fields">
+                                                <div class="field">
+                                                    <div class="ui calendar" id="rangestartProduct">
+                                                        <div class="ui input left icon">
+                                                            <input class="" type="text" placeholder="Start Date"
+                                                                   style="width:100%;"
+                                                                   id="startDateProduct">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="field">
+                                                    <div class="ui calendar" id="rangeendProduct">
+                                                        <div class="ui input left icon">
+                                                            <input class="" type="text" placeholder="End Date"
+                                                                   style="width:100%;"
+                                                                   id="endDateProduct">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="field">
+                                                    <div class="ui calendar" id="">
+                                                        <div class="ui input left icon">
+                                                            <button class="ui tiny active button" type="button"
+                                                                    onclick="filterDetailsProduct()">
+                                                                <i class="funnel dollar icon"></i>
+                                                                Search
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui calendar" id="rangeendProduct">
-                                            <div class="ui input left icon">
-                                                <input class="" type="text" placeholder="End Date" style="width:100%;"
-                                                       id="endDateProduct">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui calendar" id="">
-                                            <div class="ui input left icon">
-                                                <button class="ui tiny active button" type="button"
-                                                        onclick="filterDetailsProduct()">
-                                                    <i class="funnel dollar icon"></i>
-                                                    Search
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
 
-                </div>
-                {% comment %} <div class="two wide column" style="text-align: center">
+                            </div>
+                            {% comment %} <div class="two wide column" style="text-align: center">
                     <a href="">
                     <span>
                             <i class="funnel dollar icon" style="font-size: 2em"></i>
@@ -236,46 +241,47 @@
                 </div>
 
 {% endcomment %}
-            </div>
-        </div>
+                        </div>
+                    </div>
 
-        <div class="ui internally celled grid">
-            <div class="row">
-                <div class="sixteen wide column">
-                    <table id="purchaseTableProduct" class="ui sortable celled very compact table" style="margin-top: 5px">
-                        <thead>
-                        <tr>
-                            <th>ProductName</th>
-                            <th>Brand</th>
-                            <th>InvoiceDate</th>
-                            <th>InvoiceNo.</th>
-                            <th>CustomerName</th>
-                            <th>CustomerGST</th>
-                            <th>Quantity</th>
-                            <th>Rate(₹)</th>
-                            <th>Total(₹)</th>
-                            <th>Type</th>
-                            <th>EnteredOn</th>
-                            <th>TakeAction</th>
+                    <div class="ui internally celled grid">
+                        <div class="row">
+                            <div class="sixteen wide column">
+                                <table id="purchaseTableProduct" class="ui sortable celled very compact table"
+                                       style="margin-top: 5px">
+                                    <thead>
+                                    <tr>
+                                        <th>ProductName</th>
+                                        <th>Brand</th>
+                                        <th>InvoiceDate</th>
+                                        <th>InvoiceNo.</th>
+                                        <th>CustomerName</th>
+                                        <th>CustomerGST</th>
+                                        <th>Quantity</th>
+                                        <th>Rate(₹)</th>
+                                        <th>Total(₹)</th>
+                                        <th>Type</th>
+                                        <th>EnteredOn</th>
+                                        <th>TakeAction</th>
 
-                        </tr>
-                        </thead>
-                        <tbody>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
 
-                        </tbody>
-                    </table>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
                 </div>
-
-
             </div>
         </div>
-
-
-                </div>
-            </div>
-        </div>
-        </div>
+    </div>
 
 
 
@@ -283,16 +289,18 @@
         <div class="header">
             Sales <span class="ui teal text">Detail.</span> <span id="billDetail"></span>
             <input type="hidden" id="salesID">
-    <div class="ui small basic icon buttons" style="float: right;">
+            <div class="ui small basic icon buttons" style="float: right;">
                 <button class="ui button" onclick="printInvoice()" data-tooltip="Print Invoice A4"
                         data-position="bottom right"><i class="print icon"></i>
                 </button>
                 <button class="ui button" onclick="printInvoicea5()" data-tooltip="Print Invoice A5"
                         data-position="bottom right"><i class="print icon"></i>
                 </button>
-                <button class="ui button" onclick="printBill()" data-tooltip="Print Bill A4" data-position="bottom right">
+                <button class="ui button" onclick="printBill()" data-tooltip="Print Bill A4"
+                        data-position="bottom right">
                     <i class="sticky note icon"></i></button>
-                <button class="ui button" onclick="printBillA5()" data-tooltip="Print Bill A5" data-position="bottom right">
+                <button class="ui button" onclick="printBillA5()" data-tooltip="Print Bill A5"
+                        data-position="bottom right">
                     <i class="sticky note icon"></i></button>
                 <button class="ui button" onclick="printBillThermals()" data-tooltip="Print Bill Thermal"
                         data-position="bottom right"><i class="receipt icon"></i></button>
@@ -440,12 +448,12 @@
                                 <div class="two wide column" style="text-align: left;">
                                     <div class="ui very relaxed list">
                                         <div class="item" style="padding-bottom: 0;">
-                                        <i class="gem icon"></i>
-                                        <div class="content">
-                                            <a class="header">Personal Discount:</a>
-                                            <div class="description" id="sPersonalDiscount">N/A</div>
+                                            <i class="gem icon"></i>
+                                            <div class="content">
+                                                <a class="header">Personal Discount:</a>
+                                                <div class="description" id="sPersonalDiscount">N/A</div>
+                                            </div>
                                         </div>
-                                    </div>
                                         <div class="item" style="padding-bottom: 0;">
                                             <i class="wallet icon"></i>
                                             <div class="content">
@@ -643,10 +651,10 @@
             <div class="description">
                 <form class="ui form" id="AddCompanyForm">{% csrf_token %}
 
-                        <div class="field">
-                            <label>Paid Amount</label>
-                            <input type="number" name="paidAmount" id="paidAmount" placeholder="Paid Amount">
-                        </div>
+                    <div class="field">
+                        <label>Paid Amount</label>
+                        <input type="number" name="paidAmount" id="paidAmount" placeholder="Paid Amount">
+                    </div>
                     <input type="hidden" id="salePaymentID">
 
                 </form>
@@ -662,6 +670,38 @@
             </div>
         </div>
     </div>
+
+
+    <div class="ui modal tiny" id="editDate">
+        <i class="close icon"></i>
+        <div class="header">
+            Edit Invoice Date
+        </div>
+        <div class="image content">
+            <div class="description">
+                <form class="ui form" id="DateForm">{% csrf_token %}
+
+                    <div class="field" id="standard_calendar_edit">
+                        <input type="text" name="editDateUpdate" placeholder="editDateUpdate"
+                               autocomplete="off"
+                               id="editDateUpdate">
+                    </div>
+                    <input type="hidden" id="saleDateID">
+
+                </form>
+            </div>
+        </div>
+        <div class="actions">
+            <div class="ui black deny button">
+                Close
+            </div>
+            <div class="ui positive right labeled icon button" onclick="updateDatePost()">
+                Update
+                <i class="checkmark icon"></i>
+            </div>
+        </div>
+    </div>
+
 
 {% endblock %}
 
@@ -724,7 +764,7 @@
             }
         });
 
- $('#rangestartProduct').calendar({
+        $('#rangestartProduct').calendar({
             initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
             monthFirst: false,
             type: 'date',
@@ -771,18 +811,18 @@
                 buttons: [{
                     extend: 'excel',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                     }
                 }, {
                     extend: 'print',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                     }
                 }
                     , {
                         extend: 'colvis',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                         }
                     }
                 ],
@@ -794,7 +834,7 @@
                     {"name": "invoiceNumber", "targets": 4, "orderable": true},
                     {"name": "grandTotal", "targets": 5, "orderable": true},
                     {"name": "dueOrReturnAmount", "targets": 6, "orderable": true},
-                    {"name": "paymentType", "targets":7, "orderable": true},
+                    {"name": "paymentType", "targets": 7, "orderable": true},
                     {"name": "companyID", "targets": 8, "orderable": true},
                     {"name": "salesType", "targets": 9, "orderable": true},
                     {"name": "status", "targets": 10, "orderable": true},
@@ -826,13 +866,13 @@
                 }, {
                     extend: 'print',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                     }
                 }
                     , {
                         extend: 'colvis',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                         }
                     }
                 ],
@@ -843,7 +883,7 @@
                     {"name": "salesID.invoiceNumber", "targets": 3, "orderable": true},
                     {"name": "salesID.customerName", "targets": 4, "orderable": true},
                     {"name": "salesID.customerGst", "targets": 5, "orderable": true},
-                    {"name": "quantity", "targets":6, "orderable": true},
+                    {"name": "quantity", "targets": 6, "orderable": true},
                     {"name": "rate", "targets": 7, "orderable": true},
                     {"name": "total", "targets": 8, "orderable": true},
                     {"name": "salesID.salesType", "targets": 9, "orderable": true},
@@ -865,13 +905,20 @@
             salesTab.ajax.url('{% url 'homeApp:SalesListJson' %}?startDate=' + startDate + '&endDate=' + endDate).load();
 
         }
-   function filterDetailsProduct() {
+        function filterDetailsProduct() {
             var startDate = $('#startDateProduct').val();
             var endDate = $('#endDateProduct').val();
             productTab.ajax.url('{% url 'homeApp:SalesListByProductJson' %}?startDate=' + startDate + '&endDate=' + endDate).load();
 
         }
 
+        function editSaleDate(d,id) {
+            $('#editDate')
+                .modal('show')
+            ;
+            $('#editDateUpdate').val(d);
+            $('#saleDateID').val(id)
+        }
         function delSale(id) {
             $('#delSaleModal')
                 .modal('show')
@@ -969,7 +1016,7 @@
                     $('#PaidAgainstBill').html(response.data.Basic['PaidAgainstBill']);
                     $('#AddedBy').html(response.data.Basic['AddedBy']);
                     $('#sPersonalDiscount').html(response.data.Basic['PersonalDiscount']);
-                    $('#billDetail').html("(#"+response.data.Basic['BillNumber']+"-"+response.data.Basic['BillType']+")" );
+                    $('#billDetail').html("(#" + response.data.Basic['BillNumber'] + "-" + response.data.Basic['BillType'] + ")");
 
                     var i;
                     for (i = 0; i < response.data.Items.length; i++) {
@@ -1004,12 +1051,12 @@
             window.open('/printBill/?q=' + id, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
         }
-                function printBillThermals() {
-                    var id = $('#salesID').val();
-                    window.open('/print_bill_thermal/?q=' + id, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+        function printBillThermals() {
+            var id = $('#salesID').val();
+            window.open('/print_bill_thermal/?q=' + id, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
-                }
-                     function printInvoicea5() {
+        }
+        function printInvoicea5() {
             var id = $('#salesID').val();
             window.open('/print_invoicea5/?q=' + id, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
@@ -1020,7 +1067,7 @@
             window.open('/print_billA5/?q=' + id, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
         }
-function TakePayment(id) {
+        function TakePayment(id) {
 
             $('#takePayment')
                 .modal('show')
@@ -1029,7 +1076,7 @@ function TakePayment(id) {
 
         }
 
-              function TakePaymentPost() {
+        function TakePaymentPost() {
             var id = $('#salePaymentID').val();
             var paidAmount = $('#paidAmount').val();
             var formdata = new FormData();
@@ -1055,8 +1102,8 @@ function TakePayment(id) {
 
                         salesTab.ajax.reload();
                         $('#takePayment')
-                .modal('hide')
-            ;
+                            .modal('hide')
+                        ;
                     } else {
                         $('body')
                             .toast({
@@ -1080,8 +1127,80 @@ function TakePayment(id) {
             });
 
         }
+        $('#standard_calendar_edit')
+            .calendar({
+                    initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
+                    monthFirst: false,
+                    type: 'date',
+                    formatter: {
+                        date: function (date, settings) {
+
+                            if (!date) return '';
+                            var day = String(date.getDate());
+                            var month = String(date.getMonth() + 1);
+                            var year = date.getFullYear();
+                            return day + '/' + month + '/' + year;
+                        }
+                    },
+                 popupOptions: {
+                        observeChanges: false
+                    }
+
+                }
+            );
 
 
+                function updateDatePost() {
+            var saleDateID = $('#saleDateID').val();
+            var editDateUpdate = $('#editDateUpdate').val();
+            var formdata = new FormData();
+            formdata.append('ID', saleDateID);
+            formdata.append('uDate', editDateUpdate);
+            $.ajax({
+                url: "{% url 'homeApp:change_sales_date' %}",
+                type: "post",
+                data: formdata,
+                contentType: false,
+                cache: false,
+                processData: false,
+
+                success: function (response) {
+                    if (response.message === 'success') {
+                        $('body')
+                            .toast({
+                                class: 'success',
+                                message: 'Invoice date updated Successfully.'
+                            })
+                        ;
+
+
+                        salesTab.ajax.reload();
+                        $('#takePayment')
+                            .modal('hide')
+                        ;
+                    } else {
+                        $('body')
+                            .toast({
+                                class: 'error',
+                                message: 'An error occurred !'
+                            })
+                        ;
+
+                    }
+
+                    return response;
+                },
+                error: function () {
+                    $('body')
+                        .toast({
+                            class: 'error',
+                            message: 'An error occurred !'
+                        })
+                    ;
+                }
+            });
+
+        }
 
     </script>
 {% endblock %}

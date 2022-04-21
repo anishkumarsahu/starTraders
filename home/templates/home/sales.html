@@ -1371,6 +1371,12 @@
 
         });
 
+        $("#customerName").keyup(function () {
+        $('#customerID').val('NaN');
+
+
+        });
+
         $("#disc").keyup(function () {
             var q = $('#quantity').val();
             var price = $('#Price').val();
@@ -1839,6 +1845,7 @@
                                             }
                                         );
                                     changeProductType();
+                                      $('#customerID').val('NaN');
 
 
                             PrintOption();
@@ -2275,6 +2282,7 @@
                                                 }
                                             }
                                         );
+                                      $('#customerID').val('NaN');
                                     changeProductType();
 
 
