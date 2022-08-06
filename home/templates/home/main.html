@@ -34,7 +34,7 @@
     text-shadow: 2px 8px 6px rgba(0,0,0,0.2),
                  0px -5px 35px rgba(255,255,255,0.3);
     margin-bottom: 0;"
-            >A Billing Software<span style="font-size: 12px">  (V 2.0.1) </span></p>
+            >A Billing Software<span style="font-size: 12px">  (V 2.5.1) </span></p>
             <img src="{% static 'logo/nextbill.png' %}" alt="" width="80" height="80">
 
             <p style="color:grey;font-family: serif;font-style: italic;">"By Ziva Infotech"</p>
@@ -76,13 +76,22 @@
 
     </div>
     {% if  request.user|has_group:"Admin" %}
-        <div class="six column row">
+        <div class="eight column row">
             <div class="column">
                 <a href="{% url 'homeApp:dashboard' %}">
                     <p><i class="clipboard icon" style="font-size: 5rem;"></i><br>DASHBOARD </p>
                 </a>
             </div>
             <div class="column">
+                <a href="{% url 'homeApp:reminder_list' %}">
+                    <p><i class="bell icon" style="font-size: 5rem;"></i><br>REMINDERS </p>
+                </a>
+            </div>
+            <div class="column">
+                <a href="{% url 'homeApp:customer_due_list' %}">
+                    <p><i class="hand holding usd icon" style="font-size: 5rem;"></i><br>CUSTOMER DUE'S </p>
+                </a>
+            </div> <div class="column">
                 <a href="{% url 'homeApp:puchase' %}">
                     <p><i class="cart plus icon" style="font-size: 5rem;"></i><br>PURCHASE </p>
                 </a>

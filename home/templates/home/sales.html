@@ -189,7 +189,7 @@
                                         <label>CashBill</label>
                                     </div>
                                 </div>
-                                   <div class="field">
+                                <div class="field">
                                     <div class="ui radio checkbox checked" onclick="showDay('n')">
                                         <input type="radio" name="payment" value="GooglePay" tabindex="0"
                                                class="hidden">
@@ -285,7 +285,7 @@
 
                 <div class="two wide column">
                     <a href="">
-                        <i class="scroll icon" style="font-size: 3rem; padding: 40px;margin-right: 50px;"></i>
+                        <i class="scroll icon" style="font-size: 2.5rem; padding: 40px;margin-right: 60px;"></i>
                         <p>Create New Invoice</p>
                     </a>
                     <div id="getLastSale">
@@ -303,114 +303,115 @@
 
                 <div class="eleven wide column" style="padding-top: 0!important;padding-bottom: 0;">
                     <form class="ui form mini">
-                    <div class="ui mini form">
-                        <div class="seven fields">
-                            <div class="field">
-                                <label style="text-align: center">Product Name <i onclick="openProduct()"
-                                                                                  class="plus green icon"
-                                                                                  style="cursor:pointer"></i></label>
-                                <div class="ui productList search">
-                                    <div class="ui icon input">
-                                        <input type="text" class="prompt" id="productName" name="productName"
-                                               placeholder="Product Name" onfocus="proSearch()">
-                                        <i class="shopping bag icon"></i>
-                                        <input type="hidden" id="itemID">
+                        <div class="ui mini form">
+                            <div class="seven fields">
+                                <div class="field">
+                                    <label style="text-align: center">Product Name <i onclick="openProduct()"
+                                                                                      class="plus green icon"
+                                                                                      style="cursor:pointer"></i></label>
+                                    <div class="ui productList search">
+                                        <div class="ui icon input">
+                                            <input type="text" class="prompt" id="productName" name="productName"
+                                                   placeholder="Product Name" onfocus="proSearch()">
+                                            <i class="shopping bag icon"></i>
+                                            <input type="hidden" id="itemID">
 
 
+                                        </div>
+                                        <div class="results"></div>
                                     </div>
-                                    <div class="results"></div>
+                                </div>
+                                <div class="field">
+                                    <label style="text-align: center">Quantity</label>
+                                    <input placeholder="Quantity" type="text"
+                                           id="quantity">
+                                </div>
+                                <div class="field">
+                                    <label style="text-align: center">Unit</label>
+                                    <input placeholder="Unit" type="text"
+                                           id="unit" readonly style="background-color: lightgray;">
+                                </div>
+                                <div class="field">
+                                    <label style="text-align: center">Net Price(₹)</label>
+                                    <input placeholder="Net Price" type="number" id="netPrice">
+                                </div>
+
+                                <div class="field">
+                                    <label style="text-align: center">GST</label>
+                                    <input placeholder="GST" type="number" id="GST">
+                                </div>
+                                <div class="field">
+                                    <label style="text-align: center">Rate(₹) <span class="ui red text" id="lsp"
+                                                                                    data-tooltip="Last selling price of the product to a customer"
+                                                                                    data-position="top center"></span></label>
+                                    <input placeholder="Price" type="number" id="Price">
+                                </div>
+
+                                <div class="field">
+                                    <label style="text-align: center">Total (Without Tax)(₹)</label>
+                                    <input placeholder="Total" type="number" id="total">
                                 </div>
                             </div>
-                            <div class="field">
-                                <label style="text-align: center">Quantity</label>
-                                <input placeholder="Quantity" type="text"
-                                       id="quantity">
-                            </div>
-                            <div class="field">
-                                <label style="text-align: center">Unit</label>
-                                <input placeholder="Unit" type="text"
-                                       id="unit" readonly style="background-color: lightgray;">
-                            </div>
-                            <div class="field">
-                                <label style="text-align: center">Net Price(₹)</label>
-                                <input placeholder="Net Price" type="number" id="netPrice">
-                            </div>
 
-                            <div class="field">
-                                <label style="text-align: center">GST</label>
-                                <input placeholder="GST" type="number" id="GST">
-                            </div>
-                            <div class="field">
-                                <label style="text-align: center">Rate(₹) <span class="ui red text" id="lsp"
-                                                                                data-tooltip="Last selling price of the product to a customer"
-                                                                                data-position="top center"></span></label>
-                                <input placeholder="Price" type="number" id="Price">
-                            </div>
-
-                            <div class="field">
-                                <label style="text-align: center">Total (Without Tax)(₹)</label>
-                                <input placeholder="Total" type="number" id="total">
-                            </div>
-                        </div>
-
-                        <div class="7 fields">
-                            <div class="field">
-                                <label style="text-align: center">Bar Code</label>
-                                <input placeholder="Bar Code" type="text" id="barCode">
-                            </div>
-                            <div class="field">
-                                <label style="text-align: center">Category <i onclick="openCategory()"
-                                                                              class="plus green icon"
-                                                                              style="cursor:pointer"></i></label>
-                                <input placeholder="Category" type="text" id="category" readonly
-                                       style="background-color: lightgray;">
-                            </div>
-                            <div class="field" style="width:10%;">
-                                <label style="text-align: center">HSN</label>
-                                <input placeholder="HSN" type="text" id="hsn" readonly
-                                       style="background-color: lightgray;">
-                            </div>
-                            <div class="field" style="width:10%;">
-                                <label style="text-align: center">Stock</label>
-                                <input placeholder="Stock" type="number" id="stock" readonly
-                                       style="background-color: lightgray;">
-                            </div>
-                            <div class="field" style="width:10%;">
-                                <label style="text-align: center">MRP(₹)</label>
-                                <input placeholder="MRP" type="number" id="mrp" readonly
-                                       style="background-color: lightgray;">
-                            </div>
-                            <div class="field" style="width:10%;">
-                                <label style="text-align: center">Item Dics%</label>
-                                <input placeholder="Item Disc%" onkeyup="calNet()" type="number" id="disc" value="0">
-                            </div>
-                            {% comment %} <div class="field">
+                            <div class="7 fields">
+                                <div class="field">
+                                    <label style="text-align: center">Bar Code</label>
+                                    <input placeholder="Bar Code" type="text" id="barCode">
+                                </div>
+                                <div class="field">
+                                    <label style="text-align: center">Category <i onclick="openCategory()"
+                                                                                  class="plus green icon"
+                                                                                  style="cursor:pointer"></i></label>
+                                    <input placeholder="Category" type="text" id="category" readonly
+                                           style="background-color: lightgray;">
+                                </div>
+                                <div class="field" style="width:10%;">
+                                    <label style="text-align: center">HSN</label>
+                                    <input placeholder="HSN" type="text" id="hsn" readonly
+                                           style="background-color: lightgray;">
+                                </div>
+                                <div class="field" style="width:10%;">
+                                    <label style="text-align: center">Stock</label>
+                                    <input placeholder="Stock" type="number" id="stock" readonly
+                                           style="background-color: lightgray;">
+                                </div>
+                                <div class="field" style="width:10%;">
+                                    <label style="text-align: center">MRP(₹)</label>
+                                    <input placeholder="MRP" type="number" id="mrp" readonly
+                                           style="background-color: lightgray;">
+                                </div>
+                                <div class="field" style="width:10%;">
+                                    <label style="text-align: center">Item Dics%</label>
+                                    <input placeholder="Item Disc%" onkeyup="calNet()" type="number" id="disc"
+                                           value="0">
+                                </div>
+                                {% comment %} <div class="field">
                                 <label style="text-align: center">Bill Disc%</label>
                                 <input placeholder="Bill Disc%" type="text" id="bill_disc">
                             </div>{% endcomment %}
 
-                            <div class="field" style="    padding-top: 1.3rem;">
-                                <div class="ui buttons">
-                                    <button class="ui positive button" id="addItemBtn" type="button"
-                                            onclick="addSubItems()"><i class="plus icon"></i>Add
-                                    </button>
-                                    <button style="display: none" type="button" id="updateItemBtn"
-                                            onclick="updateSubItems()" class="ui orange button">
-                                        <i class="icon redo"></i>
-                                        Update
-                                    </button>
-                                    <div class="or"></div>
-                                    <button class="ui button red" type="button" onclick="ClearData()"><i
-                                            class="minus icon"></i>
-                                        Clear
-                                    </button>
+                                <div class="field" style="    padding-top: 1.3rem;">
+                                    <div class="ui buttons">
+                                        <button class="ui positive button" id="addItemBtn" type="button"
+                                                onclick="addSubItems()"><i class="plus icon"></i>Add
+                                        </button>
+                                        <button style="display: none" type="button" id="updateItemBtn"
+                                                onclick="updateSubItems()" class="ui orange button">
+                                            <i class="icon redo"></i>
+                                            Update
+                                        </button>
+                                        <div class="or"></div>
+                                        <button class="ui button red" type="button" onclick="ClearData()"><i
+                                                class="minus icon"></i>
+                                            Clear
+                                        </button>
 
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                        </form>
+                    </form>
                 </div>
 
                 <div class="five wide column">
@@ -481,9 +482,12 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="four wide column" style="text-align: center;padding-top: 0.5em;padding-bottom: 0em;">
+                <div class="four wide column " style="text-align: center;padding-top: 0.5em;padding-bottom: 0em;">
                     <button class="ui mini primary button" onclick="AddExtraDetail()">
                         Add Extra Details
+                    </button>
+                    <button class="ui mini purple button" onclick="AddReminder()">
+                        Add Reminder Note
                     </button>
                     <div class="ui vertical menu" style="width: 99%;float: right;position: absolute;text-align: left;margin-bottom: 0;
     margin-top: 0.5em;">
@@ -648,7 +652,7 @@
 
     <div class="ui overlay fullscreen modal front transition scrolling win">
         <div class="header">
-            Sales <span class="ui teal text">Detail.</span>  <span id="billDetail"></span>
+            Sales <span class="ui teal text">Detail.</span> <span id="billDetail"></span>
             <input type="hidden" id="salesID">
             <div class="ui small basic icon buttons" style="float: right;">
                 <button class="ui button" onclick="printInvoice()" data-tooltip="Print Invoice A4"
@@ -657,9 +661,11 @@
                 <button class="ui button" onclick="printInvoicea5()" data-tooltip="Print Invoice A5"
                         data-position="bottom right"><i class="print icon"></i>
                 </button>
-                <button class="ui button" onclick="printBill()" data-tooltip="Print Bill A4" data-position="bottom right">
+                <button class="ui button" onclick="printBill()" data-tooltip="Print Bill A4"
+                        data-position="bottom right">
                     <i class="sticky note icon"></i></button>
-                <button class="ui button" onclick="printBillA5()" data-tooltip="Print Bill A5" data-position="bottom right">
+                <button class="ui button" onclick="printBillA5()" data-tooltip="Print Bill A5"
+                        data-position="bottom right">
                     <i class="sticky note icon"></i></button>
                 <button class="ui button" onclick="printBillThermals()" data-tooltip="Print Bill Thermal"
                         data-position="bottom right"><i class="receipt icon"></i></button>
@@ -807,12 +813,12 @@
                                 <div class="two wide column" style="text-align: left;">
                                     <div class="ui very relaxed list">
                                         <div class="item" style="padding-bottom: 0;">
-                                        <i class="gem icon"></i>
-                                        <div class="content">
-                                            <a class="header">Personal Discount:</a>
-                                            <div class="description" id="sPersonalDiscount">N/A</div>
+                                            <i class="gem icon"></i>
+                                            <div class="content">
+                                                <a class="header">Personal Discount:</a>
+                                                <div class="description" id="sPersonalDiscount">N/A</div>
+                                            </div>
                                         </div>
-                                    </div>
                                         <div class="item" style="padding-bottom: 0;">
                                             <i class="wallet icon"></i>
                                             <div class="content">
@@ -980,8 +986,10 @@
 
     <i onclick="getProductStock()" class=" blink_me circular pink custom button shopping bag icon"
        style="top:50px;position: fixed;right: 10px;cursor: pointer;z-index: 100"></i>
+      <i onclick="openReminder()" class=" blink_me circular green button bell icon"
+       style="top:90px;position: fixed;right: 10px;cursor: pointer;z-index: 100"></i>
 
-    <div class="ui custom popup top left transition hidden" style="height: 450px;overflow-y: scroll">
+    <div class="ui custom popup  top left transition hidden" style="height: 450px;overflow-y: scroll">
         <h2 class="ui header">
             <i class="shopping bag icon"></i>
             <div class="content">
@@ -1001,8 +1009,6 @@
 
         </div>
     </div>
-
-
     <div class="ui modal small " id="PrintOption">
         <i class="close icon"></i>
         <div class="header">
@@ -1027,12 +1033,14 @@
                                     <i class="print icon" style="font-size: 2rem"></i>
                                     <p>Print Invoice A5</p>
                                 </a>
-                            </div><div class="column" style="padding-left: 0;padding-right: 0">
+                            </div>
+                            <div class="column" style="padding-left: 0;padding-right: 0">
                                 <a onclick="printBillA4()" style="cursor: pointer;">
                                     <i class="print icon" style="font-size: 2rem"></i>
                                     <p>Print Bill A4</p>
                                 </a>
-                            </div><div class="column" style="padding-left: 0;padding-right: 0">
+                            </div>
+                            <div class="column" style="padding-left: 0;padding-right: 0">
                                 <a onclick="printBillA55()" style="cursor: pointer;">
                                     <i class="print icon" style="font-size: 2rem"></i>
                                     <p>Print Bill A5</p>
@@ -1058,6 +1066,98 @@
     </div>
 
 
+
+    <div class="ui tiny modal" id="Reminder">
+        <i class="close icon"></i>
+        <div class="header">
+            Add Reminder Note
+        </div>
+        <div class="image content">
+            <div class="description">
+                <form class="ui form" id="AddReminderForm">{% csrf_token %}
+
+
+                    <div class="one fields">
+                        <div class="sixteen wide field" id="calenderDue">
+                            <label>Due Date</label>
+                            <input type="text" name="dueDate" placeholder="Due Date"
+                                   id="dueDate">
+                        </div>
+
+                    </div>
+                    <div class="one fields">
+                        <div class="sixteen wide  field">
+                            <label>Reminder Note</label>
+                            <input list="notes" type="text" name="Reminder Note" placeholder="Reminder Note"
+                                   id="note">
+
+                            <datalist id="notes">
+                                {% for remark in remarks %}
+                                  <option value="{{ remark.remark }}">
+                                {% endfor %}
+
+
+                            </datalist>
+                        </div>
+
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+        <div class="actions">
+            <div class="ui black deny button">
+                Close
+            </div>
+            <div class="ui positive right labeled icon button">
+                Done adding
+                <i class="checkmark icon"></i>
+            </div>
+        </div>
+    </div>
+
+<div class="ui modal" id="todayReminderList">
+ <i class="close icon"></i>
+  <div class="header">Today's Reminder</div>
+  <div class="scrolling content">
+   <table class="ui very compact blue celled table">
+  <thead>
+    <tr>
+      <th class="sorted descending">Serial No.</th>
+      <th class="">SaleID</th>
+      <th class="">Remark</th>
+      <th class="">Detail</th>
+    </tr>
+  </thead>
+  <tbody>
+
+{% for foo in reminderList %}
+ <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ foo.salesID.pk|stringformat:"05d" }}</td>
+      <td>{{ foo.remark }}</td>
+      <td>
+      <button style="font-size:10px;" onclick="GetSaleDetail({{ foo.salesID.pk }})" class="ui circular  icon button green" autocomplete="off">
+                               <i class="receipt icon"></i>
+                             </button>
+      </td>
+    </tr>
+{% endfor %}
+
+
+
+  </tbody>
+
+</table>
+  </div>
+        <div class="actions">
+            <div class="ui black deny button">
+                Close
+            </div>
+
+        </div>
+</div>
 {% endblock %}
 
 {% block js %}
@@ -1105,9 +1205,31 @@
                 }
             );
 
+        $('#calenderDue')
+            .calendar({
+                    initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
+                    monthFirst: false,
+                    type: 'date',
+                    formatter: {
+                        date: function (date, settings) {
+                            if (!date) return '';
+                            var day = date.getDate();
+                            var month = date.getMonth() + 1;
+                            var year = date.getFullYear();
+                            return day + '/' + month + '/' + year;
+                        }
+                    },
+                    popupOptions: {
+                        observeChanges: false
+                    }
+
+                }
+            );
+
         var pType;
         pType = $('#pType').val();
         $(changeProductType())
+
         function changeProductType() {
             pType = $('#pType').val();
             $('#itemTable tbody tr').remove();
@@ -1132,8 +1254,7 @@
                 $('#defaultInvoiceSeries').html('N/A');
                 $('#invoiceSeriesID').val('N/A');
 
-            }
-            else {
+            } else {
                 $('#productForm').trigger('reset');
                 proSearch()
                 $('#invoiceNo').val('').attr('readonly', true).css('background-color', 'white');
@@ -1209,8 +1330,7 @@
 
                     if (response.data['SaleID'] === 'N/A') {
                         $('#getLastSale').html('');
-                    }
-                    else {
+                    } else {
                         $('#getLastSale').html('');
                         $('#getLastSale').append('<button onclick="GetSaleDetail(' + response.data['SaleID'] + ')" class="fluid mini ui purple button" > <i class="scroll icon"></i> View Last Sale </button>')
 
@@ -1280,8 +1400,7 @@
                         $('#unit').val(response.data['ActualUnit']);
                         $('#netPrice').val(response.data['Net']);
                         $('#Price').val(response.data['Net']);
-                    }
-                    else {
+                    } else {
                         $('#itemID').val(response.data['ID']);
                         $('#productName').val(response.data['ProductName']);
 
@@ -1314,8 +1433,7 @@
             if (p === 'n') {
                 $('#days').css('display', 'none')
                 $('#cheque').css('display', 'none')
-            }
-            else if (p === 'y') {
+            } else if (p === 'y') {
                 $('#days').css('display', '')
                 $('#cheque').css('display', 'none')
             } else {
@@ -1372,7 +1490,7 @@
         });
 
         $("#customerName").keyup(function () {
-        $('#customerID').val('NaN');
+            $('#customerID').val('NaN');
 
 
         });
@@ -1414,8 +1532,7 @@
             if (dueOrReturn < 0) {
                 $('#returnLabel').html('Due')
 
-            }
-            else {
+            } else {
                 $('#returnLabel').html('Return')
             }
 
@@ -1476,8 +1593,7 @@
                         message: 'Product Name, Category, Quantity and Total are required !'
                     })
                 ;
-            }
-            else {
+            } else {
                 $('#' + itemID).remove();
                 $('#itemTable tbody').append('<tr id ="' + itemID + '" ><td id ="row' + itemID + '">#</td> <td id ="product' + itemID + '">' + productName + '</td><td id ="category' + itemID + '">' + category + '</td><td id ="hsn' + itemID + '">' + hsn + '</td><td id ="quantity' + itemID + '">' + Quantity + '</td><td id ="unit' + itemID + '">' + Unit + '</td><td id ="price' + itemID + '">' + Price + '</td><td id ="gst' + itemID + '">' + GST + '</td><td id ="disc' + itemID + '">' + disc + '</td><td id ="netprice' + itemID + '">' + NetPrice + '</td><td id ="total' + itemID + '">' + Total + '</td><td><button style="font-size:10px;" onclick="GetItemDetail(' + itemID + ')" class="ui circular facebook icon button green"><i class="pen icon"></i></button><button style="font-size:10px;" onclick="delItem(' + itemID + ')" class="ui circular youtube icon button"><i class="trash alternate icon"></i></button></td></tr>');
                 ClearData();
@@ -1557,8 +1673,7 @@
                         message: 'Product Name, Category, Quantity and Total are required !'
                     })
                 ;
-            }
-            else {
+            } else {
                 $('#product' + id).html(productName);
                 $('#category' + id).html(category);
                 $('#hsn' + id).html(hsn);
@@ -1591,6 +1706,7 @@
 
 
         }
+
         function ClearData() {
 
             $('#addItemBtn').css('display', '');
@@ -1666,7 +1782,7 @@
             $('#roundOff').html(roundOfNumber.toFixed(2))
 
 
-            var grandTotal = parseFloat(taxPlusGst) + parseFloat(otherCharges)- parseFloat(personalDiscount) + parseFloat(roundOfNumber.toFixed(2));
+            var grandTotal = parseFloat(taxPlusGst) + parseFloat(otherCharges) - parseFloat(personalDiscount) + parseFloat(roundOfNumber.toFixed(2));
 
 
             $('#GrandTotal').html(grandTotal.toFixed(2))
@@ -1682,6 +1798,20 @@
 
         }
 
+        function AddReminder() {
+
+            $('#Reminder')
+                .modal('show')
+            ;
+
+        }
+   function openReminder() {
+
+            $('#todayReminderList')
+                .modal('show')
+            ;
+
+        }
         //post
         function salesSave() {
 
@@ -1742,6 +1872,9 @@
             var otherCharges = $('#otherCharges').html();
 
             var GrandTotal = $('#GrandTotal').html();
+
+            var dueDate = $('#dueDate').val();
+            var note = $('#note').val();
             if (name === '' || pDate === '' || subTotal === '' || taxable === '' || totalFinal === '' ||
                 roundOff === '' || taxableGST === '' || bill_disc === '' || GrandTotal === '' || datas === '') {
                 $('body')
@@ -1789,6 +1922,8 @@
                 data.append('defaultInvoiceSeries', defaultInvoiceSeries);
                 data.append('paidAgainstBill', paidAgainstBill);
                 data.append('personalDiscount', personalDiscount);
+                data.append('dueDate', dueDate);
+                data.append('note', note);
 
 
                 $.ajax({
@@ -1812,6 +1947,7 @@
                             $('#formtest').trigger('reset');
                             $('#formtest2').trigger('reset');
                             $('#formtest3').trigger('reset');
+                            $('#AddReminderForm').trigger('reset');
                             $('#AddCompanyForm').trigger('reset');
                             $('#subTotal').html('0.00');
                             $('#taxable').html('0.00');
@@ -1826,34 +1962,33 @@
                             $('#paidMoney').val('0');
                             $('#dueOrReturn').val('0');
                             $('#getLastSale').html('');
-                             var today = new Date();
-                                    $('#standard_calendar')
-                                        .calendar({
-                                                initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
-                                                monthFirst: false,
-                                                type: 'date',
-                                                formatter: {
-                                                    date: function (date, settings) {
+                            var today = new Date();
+                            $('#standard_calendar')
+                                .calendar({
+                                        initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
+                                        monthFirst: false,
+                                        type: 'date',
+                                        formatter: {
+                                            date: function (date, settings) {
 
-                                                        if (!date) return '';
-                                                        var day = String(date.getDate());
-                                                        var month = String(date.getMonth() + 1);
-                                                        var year = date.getFullYear();
-                                                        return day + '/' + month + '/' + year;
-                                                    }
-                                                }
+                                                if (!date) return '';
+                                                var day = String(date.getDate());
+                                                var month = String(date.getMonth() + 1);
+                                                var year = date.getFullYear();
+                                                return day + '/' + month + '/' + year;
                                             }
-                                        );
-                                    changeProductType();
-                                      $('#customerID').val('NaN');
+                                        }
+                                    }
+                                );
+                            changeProductType();
+                            $('#customerID').val('NaN');
 
 
                             PrintOption();
                             $('#printSaleID').val(response.saleID)
 
 
-                        }
-                        else {
+                        } else {
                             $('body')
                                 .toast({
                                     class: 'error',
@@ -1922,7 +2057,7 @@
                     $('#PaidAgainstBill').html(response.data.Basic['PaidAgainstBill']);
                     $('#AddedBy').html(response.data.Basic['AddedBy']);
                     $('#sPersonalDiscount').html(response.data.Basic['PersonalDiscount']);
-                    $('#billDetail').html("(#"+response.data.Basic['BillNumber']+"-"+response.data.Basic['BillType']+")" );
+                    $('#billDetail').html("(#" + response.data.Basic['BillNumber'] + "-" + response.data.Basic['BillType'] + ")");
 
 
                     var i;
@@ -1948,11 +2083,13 @@
             ;
 
         }
+
         function printInvoice() {
             var id = $('#salesID').val();
             window.open('/print/?q=' + id, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
         }
+
         function printInvoicea5() {
             var id = $('#salesID').val();
             window.open('/print_invoicea5/?q=' + id, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
@@ -1964,19 +2101,22 @@
             window.open('/print_billA5/?q=' + id, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
         }
-         function printBill() {
+
+        function printBill() {
             var id = $('#salesID').val();
             window.open('/printBill/?q=' + id, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
         }
-        function printBillThermals() {
-                    var id = $('#salesID').val();
-                    window.open('/print_bill_thermal/?q=' + id, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
-                }
+        function printBillThermals() {
+            var id = $('#salesID').val();
+            window.open('/print_bill_thermal/?q=' + id, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+
+        }
 
 
         $(getInvoiceSeries());
+
         function getInvoiceSeries() {
             var company = $('#company').val();
             pType = $('#pType').val();
@@ -2011,8 +2151,7 @@
                         ;
                     }
                 });
-            }
-            else {
+            } else {
                 $('#defaultInvoiceSeries').html('N/A');
                 $('#invoiceSeriesID').val('N/A');
             }
@@ -2042,6 +2181,7 @@
                 }
             });
         }
+
         $('.custom.button')
             .popup({
                 popup: $('.custom.popup'),
@@ -2066,8 +2206,7 @@
                             $('#runningStock').append('  <div class="item"><div class="content"><h5 class="ui sub header">' + response.data[j]["ProductName"] + '</h5> <div class="meta"> <span class="cinema">Stock Avialable: <div class="ui label">' + response.data[j]["Stock"] + '</div></span> </div> </div></div>');
 
                         }
-                    }
-                    else {
+                    } else {
                         $('#runningStock').append('  <div class="sub header">Stock available .</div>')
                     }
 
@@ -2085,6 +2224,7 @@
 
 
         }
+
         function getProductLSP() {
             var customerID = $('#customerID').val();
             var itemID = $('#itemID').val();
@@ -2113,9 +2253,11 @@
 
 
         }
+
         function openProduct() {
             window.open('{% url "homeApp:product" %}', 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
         }
+
         function openCategory() {
             window.open('{% url "homeApp:hsn" %}', 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
         }
@@ -2181,6 +2323,9 @@
             var otherCharges = $('#otherCharges').html();
 
             var GrandTotal = $('#GrandTotal').html();
+
+            var dueDate = $('#dueDate').val();
+            var note = $('#note').val();
             if (name === '' || pDate === '' || subTotal === '' || taxable === '' || totalFinal === '' ||
                 roundOff === '' || taxableGST === '' || bill_disc === '' || GrandTotal === '' || datas === '') {
                 $('body')
@@ -2228,6 +2373,8 @@
                 data.append('defaultInvoiceSeries', defaultInvoiceSeries);
                 data.append('paidAgainstBill', paidAgainstBill);
                 data.append('personalDiscount', personalDiscount);
+                data.append('dueDate', dueDate);
+                data.append('note', note);
 
                 $.ajax({
                     type: 'post',
@@ -2251,6 +2398,7 @@
                             $('#formtest2').trigger('reset');
                             $('#formtest3').trigger('reset');
                             $('#AddCompanyForm').trigger('reset');
+                            $('#AddReminderForm').trigger('reset');
                             $('#subTotal').html('0.00');
                             $('#taxable').html('0.00');
                             $('#totalAfterGst').html('0.00');
@@ -2264,31 +2412,29 @@
                             $('#dueOrReturn').val('0');
                             $('#getLastSale').html('');
                             getInvoiceSeries();
-                          var today = new Date();
-                                    $('#standard_calendar')
-                                        .calendar({
-                                                initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
-                                                monthFirst: false,
-                                                type: 'date',
-                                                formatter: {
-                                                    date: function (date, settings) {
+                            var today = new Date();
+                            $('#standard_calendar')
+                                .calendar({
+                                        initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
+                                        monthFirst: false,
+                                        type: 'date',
+                                        formatter: {
+                                            date: function (date, settings) {
 
-                                                        if (!date) return '';
-                                                        var day = String(date.getDate());
-                                                        var month = String(date.getMonth() + 1);
-                                                        var year = date.getFullYear();
-                                                        return day + '/' + month + '/' + year;
-                                                    }
-                                                }
+                                                if (!date) return '';
+                                                var day = String(date.getDate());
+                                                var month = String(date.getMonth() + 1);
+                                                var year = date.getFullYear();
+                                                return day + '/' + month + '/' + year;
                                             }
-                                        );
-                                      $('#customerID').val('NaN');
-                                    changeProductType();
+                                        }
+                                    }
+                                );
+                            $('#customerID').val('NaN');
+                            changeProductType();
 
 
-
-                        }
-                        else {
+                        } else {
                             $('body')
                                 .toast({
                                     class: 'error',
@@ -2330,41 +2476,82 @@
 
 
         }
+
         function printInvoiceA5() {
             var ID = $('#printSaleID').val()
             window.open('/print_invoicea5/?q=' + ID, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
 
         }
+
         function printBillA4() {
             var ID = $('#printSaleID').val()
             window.open('/printBill/?q=' + ID, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
         }
+
         function printBillA55() {
             var ID = $('#printSaleID').val()
             window.open('/print_billA5/?q=' + ID, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
         }
+
         function printBillThermal() {
             var ID = $('#printSaleID').val()
             window.open('/print_bill_thermal/?q=' + ID, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
         }
 
-    $(document).on('keypress', '#phone', function (e) {
-    if (e.which == 13) {
-        e.preventDefault();
-        $('#productName').focus();
-    }
-});
+        $(document).on('keypress', '#phone', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                $('#productName').focus();
+            }
+        });
 
-    $(document).on('keypress', '#netPrice', function (e) {
-    if (e.which == 13) {
-        e.preventDefault();
-        addSubItems();
-        $('#productName').focus();
-    }
-});
+        $(document).on('keypress', '#netPrice', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                addSubItems();
+                $('#productName').focus();
+            }
+        });
+                function getReminders() {
+            pType = $('#pType').val();
+            var company = $('#company').val();
+
+            $.ajax({
+                type: 'get',
+                url: '/api/get_running_down_out_of_stock_product_list/?pType=' + pType + '&companyID=' + company,
+
+                success: function (response) {
+
+                    $('#runningStock').html('');
+                    if (response.data.length > 0) {
+                        var j;
+                        for (j = 0; j < response.data.length; j++) {
+
+                            $('#runningStock').append('  <div class="item"><div class="content"><h5 class="ui sub header">' + response.data[j]["ProductName"] + '</h5> <div class="meta"> <span class="cinema">Stock Avialable: <div class="ui label">' + response.data[j]["Stock"] + '</div></span> </div> </div></div>');
+
+                        }
+                    } else {
+                        $('#runningStock').append('  <div class="sub header">Stock available .</div>')
+                    }
+
+                },
+
+                error: function () {
+                    $('body')
+                        .toast({
+                            class: 'error',
+                            message: 'An error occurred !'
+                        })
+                    ;
+                }
+            });
+
+
+        }
+
     </script>
 {% endblock %}

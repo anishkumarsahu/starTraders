@@ -30,9 +30,12 @@ urlpatterns = [
     url(r'^report/$', report, name='report'),
     url(r'^contact/customer_ledger/(?P<id>[0-9]+)/$', customer_ledger, name='customer_ledger'),
     url(r'^contact/supplier_ledger/(?P<id>[0-9]+)/$', supplier_ledger, name='supplier_ledger'),
+    url(r'^customer_due_list/$', customer_due_list, name='customer_due_list'),
+    url(r'^reminder_list/$', reminder_list, name='reminder_list'),
 
     # customer
     url(r'^CustomerListJson/$', CustomerListJson.as_view(), name='CustomerListJson'),
+    url(r'^CustomerDueListJson/$', CustomerDueListJson.as_view(), name='CustomerDueListJson'),
 
     url(r'^api/PostCustomerDetail/$', post_customer, name='post_customer'),
     url(r'^api/GetCustomerList/$', get_customer_list, name='get_customer_list'),
@@ -174,5 +177,6 @@ urlpatterns = [
 
 
     url(r'^api/change_sales_date/$', change_sales_date, name='change_sales_date'),
+    url(r'^ReminderListJson/$', ReminderListJson.as_view(), name='ReminderListJson'),
 
 ]

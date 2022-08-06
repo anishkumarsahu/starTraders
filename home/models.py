@@ -458,3 +458,26 @@ class SalesLaterProduct(models.Model):
 
     def __str__(self):
         return self.productName
+
+class ReminderSale(models.Model):
+    salesID = models.ForeignKey(Sales, blank=True, null=True)
+    dueDate = models.DateField(blank=True, null=True)
+    remark =  models.CharField(max_length=500, blank=True, null=True)
+    datetime = models.DateTimeField(auto_now_add=True, auto_now=False)
+    lastUpdatedOn = models.DateTimeField(auto_now_add=False, auto_now=True)
+    isDeleted = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.salesID.pk)
+
+
+class ReminderSalesLater(models.Model):
+    salesID = models.ForeignKey(SalesLater, blank=True, null=True)
+    dueDate = models.DateField(blank=True, null=True)
+    remark =  models.CharField(max_length=500, blank=True, null=True)
+    datetime = models.DateTimeField(auto_now_add=True, auto_now=False)
+    lastUpdatedOn = models.DateTimeField(auto_now_add=False, auto_now=True)
+    isDeleted = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.salesID.pk)

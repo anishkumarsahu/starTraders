@@ -512,6 +512,9 @@
                     <button class="ui mini primary button" onclick="AddExtraDetail()">
                         Add Extra Details
                     </button>
+                                        <button class="ui mini purple button" onclick="AddReminder()">
+                        Add Reminder Note
+                    </button>
                     <div class="ui vertical menu" style="width: 99%;float: right;position: absolute;text-align: left;margin-bottom: 0;
     margin-top: 0.5em;">
                         <a class="teal item ">
@@ -1012,6 +1015,9 @@
     <i onclick="getProductStock()" class=" blink_me circular pink custom button shopping bag icon"
        style="top:50px;position: fixed;right: 10px;cursor: pointer;z-index: 100"></i>
 
+    <i onclick="openReminder()" class=" blink_me circular green bell icon"
+       style="top:90px;position: fixed;right: 10px;cursor: pointer;z-index: 100"></i>
+
     <div class="ui custom popup top left transition hidden" style="height: 450px;overflow-y: scroll">
         <h2 class="ui header">
             <i class="shopping bag icon"></i>
@@ -1032,8 +1038,6 @@
 
         </div>
     </div>
-
-
 
     <div class="ui modal tiny " id="PrintOption">
         <i class="close icon" onclick="goTosale()"></i>
@@ -1090,7 +1094,97 @@
 
 
 
+    <div class="ui tiny modal" id="Reminder">
+        <i class="close icon"></i>
+        <div class="header">
+            Add Reminder Note  {{ reminder.dueDate|date:'D/m/Y' }}
+        </div>
+        <div class="image content">
+            <div class="description">
+                <form class="ui form" id="AddReminderForm">{% csrf_token %}
 
+
+                    <div class="one fields">
+                        <div class="sixteen wide field" id="calenderDue">
+                            <label>Due Date</label>
+                            <input type="text" name="dueDate" placeholder="Due Date"
+                                   id="dueDate" value="{% if reminder != '' %} {{ reminder.dueDate }} {% endif %}">
+                        </div>
+
+                    </div>
+                    <div class="one fields">
+                        <div class="sixteen wide  field">
+                            <label>Reminder Note</label>
+                            <input list="notes" type="text" name="Reminder Note" placeholder="Reminder Note"
+                                   id="note"  value="{% if reminder != '' %} {{ reminder.remark }} {% endif %}" >
+
+                            <datalist id="notes">
+                                {% for remark in remarks %}
+                                  <option value="{{ remark.remark }}">
+                                {% endfor %}
+
+
+                            </datalist>
+                        </div>
+
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+        <div class="actions">
+            <div class="ui black deny button">
+                Close
+            </div>
+            <div class="ui positive right labeled icon button">
+                Done adding
+                <i class="checkmark icon"></i>
+            </div>
+        </div>
+    </div>
+
+<div class="ui modal" id="todayReminderList">
+ <i class="close icon"></i>
+  <div class="header">Today's Reminder</div>
+  <div class="scrolling content">
+   <table class="ui very compact blue celled table">
+  <thead>
+    <tr>
+      <th class="sorted descending">Serial No.</th>
+      <th class="">SaleID</th>
+      <th class="">Remark</th>
+      <th class="">Detail</th>
+    </tr>
+  </thead>
+  <tbody>
+
+{% for foo in reminderList %}
+ <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ foo.salesID.pk|stringformat:"05d" }}</td>
+      <td>{{ foo.remark }}</td>
+      <td>
+      <button style="font-size:10px;" onclick="GetSaleDetail({{ foo.salesID.pk }})" class="ui circular  icon button green" autocomplete="off">
+                               <i class="receipt icon"></i>
+                             </button>
+      </td>
+    </tr>
+{% endfor %}
+
+
+
+  </tbody>
+
+</table>
+  </div>
+        <div class="actions">
+            <div class="ui black deny button">
+                Close
+            </div>
+
+        </div>
+</div>
 {% endblock %}
 
 {% block js %}
@@ -1161,6 +1255,28 @@
         $('#calender2')
             .calendar({
                     initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
+                    monthFirst: false,
+                    type: 'date',
+                    formatter: {
+                        date: function (date, settings) {
+                            if (!date) return '';
+                            var day = date.getDate();
+                            var month = date.getMonth() + 1;
+                            var year = date.getFullYear();
+                            return day + '/' + month + '/' + year;
+                        }
+                    },
+                    popupOptions: {
+                        observeChanges: false
+                    }
+
+                }
+            );
+        $('#calenderDue')
+            .calendar({
+                {% if reminder == '' %}
+                    initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
+    {% endif %}
                     monthFirst: false,
                     type: 'date',
                     formatter: {
@@ -1749,7 +1865,20 @@
             ;
 
         }
+        function AddReminder() {
 
+            $('#Reminder')
+                .modal('show')
+            ;
+
+        }
+        function openReminder() {
+
+            $('#todayReminderList')
+                .modal('show')
+            ;
+
+        }
         //post
         function salesSave() {
             var personalDiscount = $('#personalDiscount').html();
@@ -1811,6 +1940,8 @@
             var otherCharges = $('#otherCharges').html();
 
             var GrandTotal = $('#GrandTotal').html();
+                        var dueDate = $('#dueDate').val();
+            var note = $('#note').val();
             if (name === '' || pDate === '' || subTotal === '' || taxable === '' || totalFinal === '' ||
                 roundOff === '' || taxableGST === '' || bill_disc === '' || GrandTotal === '' || datas === '') {
                 $('body')
@@ -1859,7 +1990,8 @@
                 data.append('defaultInvoiceSeries', defaultInvoiceSeries);
                 data.append('paidAgainstBill', paidAgainstBill);
                 data.append('personalDiscount', personalDiscount);
-
+                data.append('dueDate', dueDate);
+                data.append('note', note);
 
                 $.ajax({
                     type: 'post',
@@ -1883,6 +2015,8 @@
                             $('#formtest2').trigger('reset');
                             $('#formtest3').trigger('reset');
                             $('#AddCompanyForm').trigger('reset');
+                                                        $('#AddReminderForm').trigger('reset');
+
                             $('#subTotal').html('0.00');
                             $('#taxable').html('0.00');
                             $('#totalAfterGst').html('0.00');
@@ -2245,6 +2379,9 @@
             var otherCharges = $('#otherCharges').html();
 
             var GrandTotal = $('#GrandTotal').html();
+
+            var dueDate = $('#dueDate').val();
+            var note = $('#note').val();
             if (name === '' || pDate === '' || subTotal === '' || taxable === '' || totalFinal === '' ||
                 roundOff === '' || taxableGST === '' || bill_disc === '' || GrandTotal === '' || datas === '') {
                 $('body')
@@ -2293,7 +2430,8 @@
                 data.append('defaultInvoiceSeries', defaultInvoiceSeries);
                 data.append('paidAgainstBill', paidAgainstBill);
                 data.append('personalDiscount', personalDiscount);
-
+                data.append('dueDate', dueDate);
+                data.append('note', note);
                 $.ajax({
                     type: 'post',
                     url: '/api/update_booking/',

@@ -161,3 +161,15 @@ class SalesLaterAdmin(admin.ModelAdmin):
 
     inlines = (SalesLaterProductListAdmin,)
 admin.site.register(SalesLater, SalesLaterAdmin)
+
+
+class SaleReminderAdmin(admin.ModelAdmin):
+    list_display = ['salesID','dueDate','remark','datetime','lastUpdatedOn']
+
+admin.site.register(ReminderSale, SaleReminderAdmin)
+
+class SaleLaterReminderAdmin(admin.ModelAdmin):
+    list_display = ['salesID','dueDate','remark','datetime','lastUpdatedOn']
+
+admin.site.register(ReminderSalesLater, SaleLaterReminderAdmin)
+

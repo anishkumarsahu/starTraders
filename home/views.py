@@ -1,8 +1,8 @@
 from django.core import management
+from django.db import transaction
 from django.db.models import Q, Sum, F
 from django.http import JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404, HttpResponse, render_to_response
-from django.template import loader, RequestContext
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.template.defaultfilters import register
 from django.utils.crypto import get_random_string
 from django.views.decorators.csrf import csrf_exempt
@@ -37,14 +37,14 @@ def print_invoice(request, *args, **kwargs):
         'sale': sale,
         'saleProduct': saleProduct,
         'left': 11 - saleProduct.count(),
-        'loo': str().zfill(10 - saleProduct.count()-1),
-        'IGST': round(sale.gst / 2,2),
-        'CGST': round(sale.gst / 2,2),
+        'loo': str().zfill(10 - saleProduct.count() - 1),
+        'IGST': round(sale.gst / 2, 2),
+        'CGST': round(sale.gst / 2, 2),
         'TotalInWords': num2words(int(sale.grandTotal))
-
 
     }
     return render(request, 'home/invoice.html', context)
+
 
 def print_invoicea5(request, *args, **kwargs):
     query = request.GET.get('q')
@@ -57,15 +57,13 @@ def print_invoicea5(request, *args, **kwargs):
         'sale': sale,
         'saleProduct': saleProduct,
         'left': 11 - saleProduct.count(),
-        'loo': str().zfill(10 - saleProduct.count()-1),
-        'IGST': round(sale.gst / 2,2),
-        'CGST': round(sale.gst / 2,2),
+        'loo': str().zfill(10 - saleProduct.count() - 1),
+        'IGST': round(sale.gst / 2, 2),
+        'CGST': round(sale.gst / 2, 2),
         'TotalInWords': num2words(int(sale.grandTotal))
-
 
     }
     return render(request, 'home/Printinvoicea5.html', context)
-
 
 
 def print_bill(request, *args, **kwargs):
@@ -99,14 +97,14 @@ def print_billA5(request, *args, **kwargs):
         'sale': sale,
         'saleProduct': saleProduct,
         'left': 13 - saleProduct.count(),
-        'loo': str().zfill(12 - saleProduct.count()-1),
-        'IGST': round(sale.gst / 2,2),
-        'CGST': round(sale.gst / 2,2),
+        'loo': str().zfill(12 - saleProduct.count() - 1),
+        'IGST': round(sale.gst / 2, 2),
+        'CGST': round(sale.gst / 2, 2),
         'TotalInWords': num2words(int(sale.grandTotal))
-
 
     }
     return render(request, 'home/billPrintA5.html', context)
+
 
 def print_bill_thermal(request, *args, **kwargs):
     query = request.GET.get('q')
@@ -153,12 +151,38 @@ def sales(request):
         else:
             user = CompanyUser.objects.get(user_ID_id=request.user.pk)
             company = CompanyProfile.objects.filter(pk=user.company_ID_id, isDeleted__exact=False)
+        remarks = ReminderSale.objects.filter(isDeleted=False).values('remark').distinct()
+        reminderList = ReminderSale.objects.filter(isDeleted__exact=False,
+                                                   dueDate__icontains=datetime.today().date()).order_by('datetime')
 
         context = {
             'company': company,
+            'remarks': remarks,
+            'reminderList': reminderList
+
         }
 
         return render(request, 'home/sales.html', context)
+    else:
+        return redirect('homeApp:loginPage')
+
+
+@is_activated()
+def customer_due_list(request):
+    if request.user.is_authenticated:
+        # if request.groups.filter(name='Staff').is_authenticated:
+        #
+        # if 'Admin' in request.user.groups.values_list('name', flat=True):
+        #     company = CompanyProfile.objects.filter(isDeleted__exact=False)
+        # else:
+        #     user = CompanyUser.objects.get(user_ID_id=request.user.pk)
+        #     company = CompanyProfile.objects.filter(pk=user.company_ID_id, isDeleted__exact=False)
+        #
+        context = {
+            # 'company': company,
+        }
+
+        return render(request, 'home/customerDueList.html', context)
     else:
         return redirect('homeApp:loginPage')
 
@@ -201,6 +225,10 @@ def hsn_and_category(request):
 @is_activated()
 def salesReport(request):
     return render(request, 'home/salesReport.html')
+
+@is_activated()
+def reminder_list(request):
+    return render(request, 'home/reminders.html')
 
 
 @is_activated()
@@ -1201,6 +1229,57 @@ class CustomerListJson(BaseDatatableView):
         return json_data
 
 
+class CustomerDueListJson(BaseDatatableView):
+    order_columns = ['name', 'address', 'address']
+
+    def get_initial_queryset(self):
+        return Customer.objects.filter(isDeleted__exact=False)
+
+    def filter_queryset(self, qs):
+        search = self.request.GET.get('search[value]', None)
+        if search:
+            qs = qs.filter(Q(name__icontains=search) | Q(address__icontains=search) | Q(phone__icontains=search))
+
+        return qs
+
+    def prepare_results(self, qs):
+        json_data = []
+        for item in qs:
+            if item.address is None:
+                address = 'N/A'
+            else:
+                address = item.address
+            sale = Sales.objects.filter(isDeleted__exact=False, customerID_id=item.pk, )
+
+            # pay = TakePayment.objects.filter(customerID_id=item.pk)
+            action = '''<a href="/contact/customer_ledger/{}/" style="font-size:10px;"  class="ui circular facebook icon button violet">
+                            <i class="scroll icon"></i>
+                          </a>
+
+                         '''.format(item.pk),
+            if sale.count() > 0:
+                paid = 0.0
+                total = 0.0
+                for s in sale:
+                    paid = paid + s.paidAgainstBill
+                    total = total + s.grandTotal
+
+                # for p in pay:
+                #     paid = paid + p.amount
+
+                due = total - paid
+                json_data.append([
+                    escape(item.name),
+                    address,
+                    escape(item.phone),
+                    escape(total),
+                    escape(paid),
+                    escape(due),
+                    action
+                ])
+        return json_data
+
+
 class SupplierListJson(BaseDatatableView):
     order_columns = ['name', 'gst', 'phone', ]
 
@@ -1562,9 +1641,8 @@ class WareHouseListJson(BaseDatatableView):
 #     return JsonResponse({'data': data}, safe=False)
 
 
-
-
 @csrf_exempt
+@transaction.atomic
 def add_sales(request):
     if request.method == 'POST':
         personalDiscount = request.POST.get("personalDiscount")
@@ -1604,6 +1682,8 @@ def add_sales(request):
         invoiceSeriesID = request.POST.get("invoiceSeriesID")
         defaultInvoiceSeries = request.POST.get("defaultInvoiceSeries")
         paidAgainstBill = request.POST.get("paidAgainstBill")
+        dueDate = request.POST.get("dueDate")
+        note = request.POST.get("note")
 
         status = True
         paidDate = datetime.today().date()
@@ -1672,6 +1752,12 @@ def add_sales(request):
             sale.personalDiscount = float(personalDiscount)
 
             sale.save()
+            if note != '':
+                reminder = ReminderSale()
+                reminder.dueDate = datetime.strptime(dueDate, '%d/%m/%Y')
+                reminder.remark = note
+                reminder.salesID_id = sale.pk
+                reminder.save()
 
             splited_receive_item = datas.split("@")
             for item in splited_receive_item[:-1]:
@@ -1747,6 +1833,12 @@ def add_sales(request):
             sale.paidAgainstBill = float(paidAgainstBill)
             sale.personalDiscount = float(personalDiscount)
             sale.save()
+            if note != '':
+                reminder = ReminderSale()
+                reminder.dueDate = datetime.strptime(dueDate, '%d/%m/%Y')
+                reminder.remark = note
+                reminder.salesID_id = sale.pk
+                reminder.save()
 
             splited_receive_item = datas.split("@")
             for item in splited_receive_item[:-1]:
@@ -1861,7 +1953,7 @@ class SalesListByProductJson(BaseDatatableView):
 
 
 class SalesListJson(BaseDatatableView):
-    order_columns = ['customerName', 'customerGst', 'invoiceDate','id', 'invoiceNumber',
+    order_columns = ['customerName', 'customerGst', 'invoiceDate', 'id', 'invoiceNumber',
                      'grandTotal', 'paidAgainstBill', 'dueOrReturnAmount', 'paymentType', 'companyID', 'salesType',
                      'datetime', ]
 
@@ -1884,7 +1976,7 @@ class SalesListJson(BaseDatatableView):
         search = self.request.GET.get('search[value]', None)
         if search:
             qs = qs.filter(
-                Q(customerName__icontains=search) | Q(customerGst__icontains=search)| Q(id__icontains=search)
+                Q(customerName__icontains=search) | Q(customerGst__icontains=search) | Q(id__icontains=search)
                 | Q(invoiceDate__icontains=search) | Q(invoiceNumber__icontains=search)
                 | Q(salesType__icontains=search)
                 | Q(grandTotal__icontains=search) | Q(paymentType__icontains=search) | Q(
@@ -1923,11 +2015,12 @@ class SalesListJson(BaseDatatableView):
 
                              <button style="font-size:10px;" onclick ="delSale('{}')" class="ui circular youtube icon button" style="margin-left: 3px">
                                <i class="trash alternate icon"></i>
-                             </button>'''.format(item.pk, item.pk,item.invoiceDate.strftime('%d/%m/%Y'), item.pk, item.pk),
+                             </button>'''.format(item.pk, item.pk, item.invoiceDate.strftime('%d/%m/%Y'), item.pk,
+                                                 item.pk),
             else:
                 action = '''<button style="font-size:10px;" onclick = "GetSaleDetail('{}')" class="ui circular  icon button green">
                                                <i class="receipt icon"></i>
-                                             </button>'''.format(item.pk, item.pk, item.pk,item.pk),
+                                             </button>'''.format(item.pk, item.pk, item.pk, item.pk),
 
             json_data.append([
                 escape(item.customerName),  # escape HTML for security reasons
@@ -1959,7 +2052,7 @@ class SalesListJson(BaseDatatableView):
 
 
 class SalesListByCustomerJson(BaseDatatableView):
-    order_columns = ['id', 'invoiceDate', 'id','invoiceNumber',
+    order_columns = ['id', 'invoiceDate', 'id', 'invoiceNumber',
                      'grandTotal', 'paidAgainstBill', 'paymentType', 'companyID', 'salesType', 'datetime', ]
 
     def get_initial_queryset(self):
@@ -1976,7 +2069,7 @@ class SalesListByCustomerJson(BaseDatatableView):
         if search:
             qs = qs.filter(
                 Q(status__icontains=search)
-                | Q(invoiceDate__icontains=search) | Q(invoiceNumber__icontains=search)| Q(id__icontains=search)
+                | Q(invoiceDate__icontains=search) | Q(invoiceNumber__icontains=search) | Q(id__icontains=search)
                 | Q(salesType__icontains=search)
                 | Q(grandTotal__icontains=search) | Q(paymentType__icontains=search) | Q(creditDays__icontains=search)
                 | Q(companyID__name__icontains=search)
@@ -2164,7 +2257,7 @@ def get_sales_detail_for_invoice(request, id=None):
         item_quantity.append(i.quantity)
         item_rate.append(i.rate)
         item_unit.append(i.unit)
-        item_gst_amount.append(round((i.quantity * i.rate) * (i.gst / 100),2))
+        item_gst_amount.append(round((i.quantity * i.rate) * (i.gst / 100), 2))
         val = (i.rate * i.quantity) - ((instance.billDisc / 100) * i.rate * i.quantity)
         item_item_total.append(val)
         count = count + 1
@@ -2305,7 +2398,6 @@ def Edit_company(request):
 
         edit_company = CompanyProfile.objects.get(pk=int(ID))
         # company = CompanyProfile()
-
 
         edit_company.name = companyName
         edit_company.gst = gstNo
@@ -3081,7 +3173,7 @@ def add_expense(request):
 
 
 class ExpenseListJson(BaseDatatableView):
-    order_columns = ['expenseType', 'description', 'amount', 'companyID', 'expenseDate', 'datetime','action']
+    order_columns = ['expenseType', 'description', 'amount', 'companyID', 'expenseDate', 'datetime', 'action']
 
     def get_initial_queryset(self):
         sDate = self.request.GET.get('startDate')
@@ -3124,6 +3216,7 @@ class ExpenseListJson(BaseDatatableView):
             ])
         return json_data
 
+
 @csrf_exempt
 def delete_expense(request):
     if request.method == 'POST':
@@ -3131,7 +3224,6 @@ def delete_expense(request):
         cus = Expense.objects.get(pk=int(idC))
         cus.delete()
         return JsonResponse({'message': 'success'}, safe=False)
-
 
 
 def change_password(request):
@@ -3534,6 +3626,7 @@ def download_sales_report(request):
 
 
 @csrf_exempt
+@transaction.atomic
 def add_booking(request):
     if request.method == 'POST':
         personalDiscount = request.POST.get("personalDiscount")
@@ -3573,7 +3666,8 @@ def add_booking(request):
         invoiceSeriesID = request.POST.get("invoiceSeriesID")
         defaultInvoiceSeries = request.POST.get("defaultInvoiceSeries")
         paidAgainstBill = request.POST.get("paidAgainstBill")
-
+        dueDate = request.POST.get("dueDate")
+        note = request.POST.get("note")
         status = True
         paidDate = datetime.today().date()
         if payment == 'Credit':
@@ -3640,7 +3734,12 @@ def add_booking(request):
             sale.paidAgainstBill = float(paidAgainstBill)
             sale.personalDiscount = float(personalDiscount)
             sale.save()
-
+            if note != '':
+                reminder = ReminderSalesLater()
+                reminder.dueDate = datetime.strptime(dueDate, '%d/%m/%Y')
+                reminder.remark = note
+                reminder.salesID_id = sale.pk
+                reminder.save()
             splited_receive_item = datas.split("@")
             for item in splited_receive_item[:-1]:
                 item_details = item.split('|')
@@ -3715,7 +3814,12 @@ def add_booking(request):
             sale.paidAgainstBill = float(paidAgainstBill)
             sale.personalDiscount = float(personalDiscount)
             sale.save()
-
+            if note != '':
+                reminder = ReminderSalesLater()
+                reminder.dueDate = datetime.strptime(dueDate, '%d/%m/%Y')
+                reminder.remark = note
+                reminder.salesID_id = sale.pk
+                reminder.save()
             splited_receive_item = datas.split("@")
             for item in splited_receive_item[:-1]:
                 item_details = item.split('|')
@@ -3860,7 +3964,10 @@ def BookingSale(request, id=None):
     if request.user.is_authenticated:
         instance = get_object_or_404(SalesLater, pk=id)
         pro = SalesLaterProduct.objects.filter(salesID_id=instance.pk)
-
+        try:
+            reminder = ReminderSalesLater.objects.get(salesID_id=instance.pk)
+        except:
+            reminder = ''
         # if request.groups.filter(name='Staff').is_authenticated:
 
         if 'Admin' in request.user.groups.values_list('name', flat=True):
@@ -3868,11 +3975,17 @@ def BookingSale(request, id=None):
         else:
             user = CompanyUser.objects.get(user_ID_id=request.user.pk)
             company = CompanyProfile.objects.filter(pk=user.company_ID_id, isDeleted__exact=False)
+        remarks = ReminderSale.objects.filter(isDeleted=False).values('remark').distinct()
+        reminderList = ReminderSale.objects.filter(isDeleted__exact=False,
+                                                   dueDate__icontains=datetime.today().date()).order_by('datetime')
 
         context = {
             'sale': instance,
             'Products': pro,
             'company': company,
+            'remarks': remarks,
+            'reminder': reminder,
+            'reminderList': reminderList
         }
 
         return render(request, 'home/BookingSale.html', context)
@@ -3881,6 +3994,7 @@ def BookingSale(request, id=None):
 
 
 @csrf_exempt
+@transaction.atomic
 def update_booking(request):
     if request.method == 'POST':
         personalDiscount = request.POST.get("personalDiscount")
@@ -3921,7 +4035,8 @@ def update_booking(request):
         invoiceSeriesID = request.POST.get("invoiceSeriesID")
         defaultInvoiceSeries = request.POST.get("defaultInvoiceSeries")
         paidAgainstBill = request.POST.get("paidAgainstBill")
-
+        dueDate = request.POST.get("dueDate")
+        note = request.POST.get("note")
         status = True
         paidDate = datetime.today().date()
         if payment == 'Credit':
@@ -3989,6 +4104,15 @@ def update_booking(request):
             sale.personalDiscount = float(personalDiscount)
 
             sale.save()
+            if note != '':
+                try:
+                    reminder = ReminderSalesLater.objects.get(salesID_id=sale.pk)
+                    reminder.dueDate = datetime.strptime(dueDate, '%d/%m/%Y')
+                    reminder.remark = note
+                    reminder.salesID_id = sale.pk
+                    reminder.save()
+                except:
+                    pass
 
             splited_receive_item = datas.split("@")
 
@@ -4067,7 +4191,15 @@ def update_booking(request):
             sale.paidAgainstBill = float(paidAgainstBill)
             sale.personalDiscount = float(personalDiscount)
             sale.save()
-
+            if note != '':
+                try:
+                    reminder = ReminderSalesLater.objects.get(salesID_id=sale.pk)
+                    reminder.dueDate = datetime.strptime(dueDate, '%d/%m/%Y')
+                    reminder.remark = note
+                    reminder.salesID_id = sale.pk
+                    reminder.save()
+                except:
+                    pass
             splited_receive_item = datas.split("@")
             old_pro = SalesLaterProduct.objects.filter(salesID_id=int(bookingID))
             old_pro.delete()
@@ -4137,7 +4269,8 @@ def add_sales_from_booking(request):
         invoiceSeriesID = request.POST.get("invoiceSeriesID")
         defaultInvoiceSeries = request.POST.get("defaultInvoiceSeries")
         paidAgainstBill = request.POST.get("paidAgainstBill")
-
+        dueDate = request.POST.get("dueDate")
+        note = request.POST.get("note")
         status = True
         paidDate = datetime.today().date()
         if payment == 'Credit':
@@ -4205,7 +4338,12 @@ def add_sales_from_booking(request):
             sale.personalDiscount = float(personalDiscount)
 
             sale.save()
-
+            if note != '':
+                reminder = ReminderSale()
+                reminder.dueDate = datetime.strptime(dueDate, '%d/%m/%Y')
+                reminder.remark = note
+                reminder.salesID_id = sale.pk
+                reminder.save()
             splited_receive_item = datas.split("@")
             for item in splited_receive_item[:-1]:
                 item_details = item.split('|')
@@ -4283,7 +4421,12 @@ def add_sales_from_booking(request):
             sale.paidAgainstBill = float(paidAgainstBill)
             sale.personalDiscount = float(personalDiscount)
             sale.save()
-
+            if note != '':
+                reminder = ReminderSale()
+                reminder.dueDate = datetime.strptime(dueDate, '%d/%m/%Y')
+                reminder.remark = note
+                reminder.salesID_id = sale.pk
+                reminder.save()
             splited_receive_item = datas.split("@")
             for item in splited_receive_item[:-1]:
                 item_details = item.split('|')
@@ -4312,9 +4455,10 @@ def add_sales_from_booking(request):
             book.save()
             return JsonResponse({'message': 'success', 'saleID': sale.pk}, safe=False)
 
+
 def error_404(request, exception):
-        data = {}
-        return render(request, 'home/error/404.html', data)
+    data = {}
+    return render(request, 'home/error/404.html', data)
 
 
 def error_500(request, exception):
@@ -4332,3 +4476,55 @@ def change_sales_date(request):
         sale.save()
 
         return JsonResponse({'message': 'success'}, safe=False)
+
+
+class ReminderListJson(BaseDatatableView):
+    order_columns = ['salesID', 'dueDate', 'remark', 'datetime', ]
+
+    def get_initial_queryset(self):
+        sDate = self.request.GET.get('startDate')
+        eDate = self.request.GET.get('endDate')
+        startDate = datetime.strptime(sDate, '%d/%m/%Y')
+        endDate = datetime.strptime(eDate, '%d/%m/%Y')
+
+        return ReminderSale.objects.filter(isDeleted__exact=False, dueDate__gte=startDate.date(),
+                                        dueDate__lte=endDate.date() + timedelta(days=1))
+
+
+    def filter_queryset(self, qs):
+        search = self.request.GET.get('search[value]', None)
+        if search:
+            qs = qs.filter(
+                Q(dueDate__icontains=search) | Q(remark__icontains=search) | Q(salesID__icontains=search))
+
+        return qs
+
+    def prepare_results(self, qs):
+        json_data = []
+        for item in qs:
+# '''              <button style="font-size:10px;" onclick ="delSale('{}')" class="ui circular youtube icon button" style="margin-left: 3px">
+#                                <i class="trash alternate icon"></i>
+#                              </button>'''
+            if 'Admin' in self.request.user.groups.values_list('name', flat=True):
+
+                action = '''<button style="font-size:10px;" onclick = "GetSaleDetail('{}')" class="ui circular  icon button green">
+                               <i class="receipt icon"></i>
+                             </button>
+               
+                             '''.format(item.salesID.pk,
+                                                 item.pk),
+            else:
+                action = '''<button style="font-size:10px;" onclick = "GetSaleDetail('{}')" class="ui circular  icon button green">
+                                               <i class="receipt icon"></i>
+                                             </button>'''.format(item.salesID.pk),
+
+            json_data.append([
+                str(item.salesID.pk).zfill(5), # escape HTML for security reasons
+                escape(item.dueDate),
+                escape(item.remark),
+                escape(item.datetime.strftime('%d-%m-%Y %I:%M %p')),
+                action
+
+            ])
+        return json_data
+

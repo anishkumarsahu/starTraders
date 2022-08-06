@@ -1,0 +1,237 @@
+{% extends 'home/index.html' %}
+{% load static %}
+{% block title %}
+    <title>Customer Due List</title>
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'cssMain/dataTables.semanticui.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cssMain/tableCss/dataTables.semanticui.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cssMain/tableCss/buttons.semanticui.min.css' %}">
+{% endblock %}
+{% block body %}
+    <style>
+        .cwide {
+            width: 75% !important;
+        }
+
+        #purchaseTable_length {
+            left: 10px;
+            position: absolute;
+        }
+
+        #purchaseTable_filter {
+            width: 75%;
+            float: right;
+        }
+
+        .dt-buttons {
+            position: absolute;
+            left: 200px;
+        }
+    </style>
+
+    <div class="ui right aligned basic segment">
+    {% comment %}    <div class="ui internally grid">
+            <div class="row" style="padding-bottom: 0!important;padding-top: 0!important;">
+
+                <div class="eight wide column">
+                    <div class="ui form">
+
+
+                        <form class="ui tiny form">
+
+                            <div class="field inline" id="custom_date">
+                            <span style="float: left;padding: 7px;">
+                            <i class="calendar alternate icon"></i>
+                            <label>Filter By Date Range</label>
+                            </span>
+                                <div class="three fields">
+                                    <div class="field">
+                                        <div class="ui calendar" id="rangestart">
+                                            <div class="ui input left icon">
+                                                <input class="" type="text" placeholder="Start Date" style="width:100%;"
+                                                       id="startDateF">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui calendar" id="rangeend">
+                                            <div class="ui input left icon">
+                                                <input class="" type="text" placeholder="End Date" style="width:100%;"
+                                                       id="endDateF">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui calendar" id="rangeend">
+                                            <div class="ui input left icon">
+                                                <button class="ui tiny active button" type="button"
+                                                        onclick="filterDetails()">
+                                                    <i class="funnel dollar icon"></i>
+                                                    Search
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+{% endcomment %}
+        <div class="ui internally celled grid">
+
+            <div class="row">
+
+                <div class="sixteen wide column">
+                    <h5 class="ui horizontal left aligned divider header">
+                        <i class="left align icon"></i>
+                        Customer Due List
+                    </h5>
+                    <table id="purchaseTable" class="ui sortable celled very compact table" style="margin-top: 5px">
+                        <thead>
+                        <tr>
+                            <th>CustomerName</th>
+                            <th>Address</th>
+                            <th>PhoneNumber</th>
+                            <th>Total(₹)</th>
+                            <th>Paid(₹)</th>
+                            <th>Due(₹)</th>
+                            <th>Action</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'jsMain/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'jsMain/dataTables.semanticui.min.js' %}"></script>
+    <script src="{% static 'table/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'table/buttons.semanticui.min.js' %}"></script>
+    <script src="{% static 'table/jszip.min.js' %}"></script>
+    <script src="{% static 'table/pdfmake.min.js' %}"></script>
+    <script src="{% static 'table/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'table/buttons.print.min.js' %}"></script>
+    <script src="{% static 'table/buttons.colVis.min.js' %}"></script>
+    <script>
+        $('.menu .item').tab();
+{% comment %}        $('#standard_calendar')
+            .calendar({
+                    monthFirst: false,
+                    type: 'date',
+                    formatter: {
+                        date: function (date, settings) {
+                            if (!date) return '';
+                            var day = date.getDate();
+                            var month = date.getMonth() + 1;
+                            var year = date.getFullYear();
+                            return day + '/' + month + '/' + year;
+                        }
+                    }
+                }
+            );
+        var today = new Date();
+
+        $('#rangestart').calendar({
+            initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
+            monthFirst: false,
+            type: 'date',
+            endCalendar: $('#rangeend'),
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                }
+            }
+        });
+        $('#rangeend').calendar({
+            initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
+            monthFirst: false,
+            type: 'date',
+            startCalendar: $('#rangestart'),
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                }
+            }
+        });
+        {% endcomment %}
+        $(getPurchase());
+        var purchaseTab;
+        function getPurchase() {
+
+            var startDate = $('#startDateF').val();
+            var endDate = $('#endDateF').val();
+            purchaseTab = $('#purchaseTable').DataTable({
+                dom: 'Blfrtip',
+                "scrollY": "280px",
+                buttons: [{
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5]
+                    }
+                }, {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5]
+                    }
+                }
+                    , {
+                        extend: 'colvis',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        }
+                    }
+                ],
+                "columnDefs": [
+                    {"name": "name", "targets": 0, "orderable": true},
+                    {"name": "address", "targets": 1, "orderable": true},
+                    {"name": "phone", "targets": 2, "orderable": true},
+                    {"name": "total", "targets": 3, "orderable": true},
+                    {"name": "paid", "targets": 4, "orderable": true},
+                    {"name": "due", "targets": 5, "orderable": true},
+                    {"name": "action", "targets": 6, "orderable": false},
+
+                ],
+                aaSorting: [[0, 'asc']],
+                "lengthMenu": [[8, 25, 50, 100, -1], [8, 25, 50, 100, "All"]],
+                "pageLength": 8,
+                "processing": true,
+                "serverSide": false,
+                "ajax": '{% url 'homeApp:CustomerDueListJson' %}'
+            });
+        }
+
+        function filterDetails() {
+            var startDate = $('#startDateF').val();
+            var endDate = $('#endDateF').val();
+            purchaseTab.ajax.url('{% url 'homeApp:CustomerDueListJson' %}?startDate=' + startDate + '&endDate=' + endDate).load();
+
+        }
+
+    </script>
+{% endblock %}
