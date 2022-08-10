@@ -986,7 +986,7 @@
 
     <i onclick="getProductStock()" class=" blink_me circular pink custom button shopping bag icon"
        style="top:50px;position: fixed;right: 10px;cursor: pointer;z-index: 100"></i>
-      <i onclick="openReminder()" class=" blink_me circular green button bell icon"
+    <i onclick="openReminder()" class=" blink_me circular green button bell icon"
        style="top:90px;position: fixed;right: 10px;cursor: pointer;z-index: 100"></i>
 
     <div class="ui custom popup  top left transition hidden" style="height: 450px;overflow-y: scroll">
@@ -1093,7 +1093,7 @@
 
                             <datalist id="notes">
                                 {% for remark in remarks %}
-                                  <option value="{{ remark.remark }}">
+                                    <option value="{{ remark.remark }}">
                                 {% endfor %}
 
 
@@ -1117,47 +1117,47 @@
         </div>
     </div>
 
-<div class="ui modal" id="todayReminderList">
- <i class="close icon"></i>
-  <div class="header">Today's Reminder</div>
-  <div class="scrolling content">
-   <table class="ui very compact blue celled table">
-  <thead>
-    <tr>
-      <th class="sorted descending">Serial No.</th>
-      <th class="">SaleID</th>
-      <th class="">Remark</th>
-      <th class="">Detail</th>
-    </tr>
-  </thead>
-  <tbody>
+    <div class="ui modal" id="todayReminderList">
+        <i class="close icon"></i>
+        <div class="header">Today's Reminder</div>
+        <div class="scrolling content">
+            <table class="ui very compact blue celled table">
+                <thead>
+                <tr>
+                    <th class="sorted descending">Serial No.</th>
+                    <th class="">SaleID</th>
+                    <th class="">Remark</th>
+                    <th class="">Detail</th>
+                </tr>
+                </thead>
+                <tbody>
 
-{% for foo in reminderList %}
- <tr>
-      <td>{{ forloop.counter }}</td>
-      <td>{{ foo.salesID.pk|stringformat:"05d" }}</td>
-      <td>{{ foo.remark }}</td>
-      <td>
-      <button style="font-size:10px;" onclick="GetSaleDetail({{ foo.salesID.pk }})" class="ui circular  icon button green" autocomplete="off">
-                               <i class="receipt icon"></i>
-                             </button>
-      </td>
-    </tr>
-{% endfor %}
+                {% for foo in reminderList %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ foo.salesID.pk|stringformat:"05d" }}</td>
+                        <td>{{ foo.remark }}</td>
+                        <td>
+                            <button style="font-size:10px;" onclick="GetSaleDetail({{ foo.salesID.pk }})"
+                                    class="ui circular  icon button green" autocomplete="off">
+                                <i class="receipt icon"></i>
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
 
 
+                </tbody>
 
-  </tbody>
-
-</table>
-  </div>
+            </table>
+        </div>
         <div class="actions">
             <div class="ui black deny button">
                 Close
             </div>
 
         </div>
-</div>
+    </div>
 {% endblock %}
 
 {% block js %}
@@ -1805,13 +1805,15 @@
             ;
 
         }
-   function openReminder() {
+
+        function openReminder() {
 
             $('#todayReminderList')
                 .modal('show')
             ;
 
         }
+
         //post
         function salesSave() {
 
@@ -2188,6 +2190,7 @@
                 on: 'click'
             })
         ;
+
         function getProductStock() {
             pType = $('#pType').val();
             var company = $('#company').val();
@@ -2509,6 +2512,24 @@
             }
         });
 
+        $(document).on('keypress', '#gst', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                $('#productName').focus();
+            }
+        });
+        $(document).on('keypress', '#email', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                $('#productName').focus();
+            }
+        });
+        $(document).on('keypress', '#address', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                $('#productName').focus();
+            }
+        });
         $(document).on('keypress', '#netPrice', function (e) {
             if (e.which == 13) {
                 e.preventDefault();
@@ -2516,7 +2537,8 @@
                 $('#productName').focus();
             }
         });
-                function getReminders() {
+
+        function getReminders() {
             pType = $('#pType').val();
             var company = $('#company').val();
 

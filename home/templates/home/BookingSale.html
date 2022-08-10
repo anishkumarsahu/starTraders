@@ -194,7 +194,7 @@
                                         <label>CashBill</label>
                                     </div>
                                 </div>
-                                                      <div class="field">
+                                <div class="field">
                                     <div class="ui radio checkbox checked" onclick="showDay('n')">
                                         <input type="radio" name="payment" value="GooglePay" tabindex="0"
                                                class="hidden">
@@ -482,26 +482,28 @@
                         </thead>
                         <tbody>
                         {% for product in Products %}
-                        <tr id="{{ product.productID_id }}">
-                            <td id="row{{ product.productID_id }}">#</td>
-                            <td id="product{{ product.productID_id }}">{{ product.productName }}</td>
-                            <td id="category{{ product.productID_id }}">{{ product.category }}</td>
-                            <td id="hsn{{ product.productID_id }}">{{ product.hsn }}</td>
-                            <td id="quantity{{ product.productID_id }}">{{ product.quantity }}</td>
-                            <td id="unit{{ product.productID_id }}">{{ product.unit }}</td>
-                            <td id="price{{ product.productID_id }}">{{ product.rate }}</td>
-                            <td id="gst{{ product.productID_id }}">{{ product.gst }}</td>
-                            <td id="disc{{ product.productID_id }}">{{ product.disc }}</td>
-                            <td id="netprice{{ product.productID_id }}">{{ product.netRate }}</td>
-                            <td id="total{{ product.productID_id }}">{{ product.total }}</td>
-                            <td>
-                                <button style="font-size:10px;" onclick="GetItemDetail('{{ product.productID_id }}')"
-                                        class="ui circular facebook icon button green"><i class="pen icon"></i></button>
-                                <button style="font-size:10px;" onclick="delItem('{{ product.productID_id }}')"
-                                        class="ui circular youtube icon button"><i class="trash alternate icon"></i>
-                                </button>
-                            </td>
-                        </tr>
+                            <tr id="{{ product.productID_id }}">
+                                <td id="row{{ product.productID_id }}">#</td>
+                                <td id="product{{ product.productID_id }}">{{ product.productName }}</td>
+                                <td id="category{{ product.productID_id }}">{{ product.category }}</td>
+                                <td id="hsn{{ product.productID_id }}">{{ product.hsn }}</td>
+                                <td id="quantity{{ product.productID_id }}">{{ product.quantity }}</td>
+                                <td id="unit{{ product.productID_id }}">{{ product.unit }}</td>
+                                <td id="price{{ product.productID_id }}">{{ product.rate }}</td>
+                                <td id="gst{{ product.productID_id }}">{{ product.gst }}</td>
+                                <td id="disc{{ product.productID_id }}">{{ product.disc }}</td>
+                                <td id="netprice{{ product.productID_id }}">{{ product.netRate }}</td>
+                                <td id="total{{ product.productID_id }}">{{ product.total }}</td>
+                                <td>
+                                    <button style="font-size:10px;"
+                                            onclick="GetItemDetail('{{ product.productID_id }}')"
+                                            class="ui circular facebook icon button green"><i class="pen icon"></i>
+                                    </button>
+                                    <button style="font-size:10px;" onclick="delItem('{{ product.productID_id }}')"
+                                            class="ui circular youtube icon button"><i class="trash alternate icon"></i>
+                                    </button>
+                                </td>
+                            </tr>
                         {% endfor %}
 
 
@@ -512,28 +514,31 @@
                     <button class="ui mini primary button" onclick="AddExtraDetail()">
                         Add Extra Details
                     </button>
-                                        <button class="ui mini purple button" onclick="AddReminder()">
+                    <button class="ui mini purple button" onclick="AddReminder()">
                         Add Reminder Note
                     </button>
                     <div class="ui vertical menu" style="width: 99%;float: right;position: absolute;text-align: left;margin-bottom: 0;
     margin-top: 0.5em;">
                         <a class="teal item ">
                             <strong style="color: black;">Other Charges (₹) :</strong>
-                            <div class="ui violet label" id="otherCharges" contentEditable="true">{{ sale.otherCharges }}</div>
+                            <div class="ui violet label" id="otherCharges"
+                                 contentEditable="true">{{ sale.otherCharges }}</div>
                         </a>
                         <a class="teal item ">
                             <strong style="color: black;">Personal Discount (₹) :</strong>
-                            <div class="ui violet label" id="personalDiscount" contentEditable="true">{{ sale.personalDiscount }}</div>
+                            <div class="ui violet label" id="personalDiscount"
+                                 contentEditable="true">{{ sale.personalDiscount }}</div>
                         </a>
                         <a class="teal item active">
-                        <strong style="color: black;">Grand Total (₹) :</strong>
-                        <div class="ui blue label" id="GrandTotal">{{ sale.grandTotal }}</div>
-                    </a>
+                            <strong style="color: black;">Grand Total (₹) :</strong>
+                            <div class="ui blue label" id="GrandTotal">{{ sale.grandTotal }}</div>
+                        </a>
                         <div class="ui mini form">
                             <div class="three fields">
                                 <div class="field">
                                     <label>Paid Against Bill</label>
-                                    <input placeholder="Paid Against Bill" type="number" id="paidAgainstBill" value="{{ sale.paidAgainstBill }}">
+                                    <input placeholder="Paid Against Bill" type="number" id="paidAgainstBill"
+                                           value="{{ sale.paidAgainstBill }}">
                                 </div>
 
                                 <div class="field" style="background: lightgrey;">
@@ -620,7 +625,8 @@
                     <div class="two fields">
                         <div class="field">
                             <label>Delivery Note</label>
-                            <input type="text" name="deliveryNote" id="deliveryNote" placeholder="deliveryNote" value="{{ sale.deliveryNote }}">
+                            <input type="text" name="deliveryNote" id="deliveryNote" placeholder="deliveryNote"
+                                   value="{{ sale.deliveryNote }}">
                         </div>
                         <div class="field">
                             <label>Supplier Reference</label>
@@ -651,18 +657,20 @@
                         </div>
                         <div class="field">
                             <label>Other Reference</label>
-                            <input type="text" name="otherReference" placeholder="Other Reference" id="otherReference" value="{{ sale.otherReference }}">
+                            <input type="text" name="otherReference" placeholder="Other Reference" id="otherReference"
+                                   value="{{ sale.otherReference }}">
                         </div>
                     </div>
                     <div class="two fields">
                         <div class="field" id="calender2">
                             <label>Dispatch Note Date</label>
                             <input type="text" name="dispatchNoteDate" placeholder="Dispatch Note Date"
-                                   id="dispatchNoteDate" >
+                                   id="dispatchNoteDate">
                         </div>
                         <div class="field">
                             <label>Destination</label>
-                            <input type="text" name="destination" placeholder="Destination" id="destination" value="{{ sale.destination }}">
+                            <input type="text" name="destination" placeholder="Destination" id="destination"
+                                   value="{{ sale.destination }}">
                         </div>
                     </div>
 
@@ -683,18 +691,20 @@
 
     <div class="ui overlay fullscreen modal front transition scrolling win">
         <div class="header">
-            Sales <span class="ui teal text">Detail.</span>  <span id="billDetail"></span>
+            Sales <span class="ui teal text">Detail.</span> <span id="billDetail"></span>
             <input type="hidden" id="salesID">
-             <div class="ui small basic icon buttons" style="float: right;">
+            <div class="ui small basic icon buttons" style="float: right;">
                 <button class="ui button" onclick="printInvoice()" data-tooltip="Print Invoice A4"
                         data-position="bottom right"><i class="print icon"></i>
                 </button>
                 <button class="ui button" onclick="printInvoicea5()" data-tooltip="Print Invoice A5"
                         data-position="bottom right"><i class="print icon"></i>
                 </button>
-                <button class="ui button" onclick="printBill()" data-tooltip="Print Bill A4" data-position="bottom right">
+                <button class="ui button" onclick="printBill()" data-tooltip="Print Bill A4"
+                        data-position="bottom right">
                     <i class="sticky note icon"></i></button>
-                <button class="ui button" onclick="printBillA5()" data-tooltip="Print Bill A5" data-position="bottom right">
+                <button class="ui button" onclick="printBillA5()" data-tooltip="Print Bill A5"
+                        data-position="bottom right">
                     <i class="sticky note icon"></i></button>
                 <button class="ui button" onclick="printBillThermals()" data-tooltip="Print Bill Thermal"
                         data-position="bottom right"><i class="receipt icon"></i></button>
@@ -841,13 +851,13 @@
                                 </div>
                                 <div class="two wide column" style="text-align: left;">
                                     <div class="ui very relaxed list">
-                                         <div class="item" style="padding-bottom: 0;">
-                                        <i class="gem icon"></i>
-                                        <div class="content">
-                                            <a class="header">Personal Discount:</a>
-                                            <div class="description" id="sPersonalDiscount">N/A</div>
+                                        <div class="item" style="padding-bottom: 0;">
+                                            <i class="gem icon"></i>
+                                            <div class="content">
+                                                <a class="header">Personal Discount:</a>
+                                                <div class="description" id="sPersonalDiscount">N/A</div>
+                                            </div>
                                         </div>
-                                    </div>
                                         <div class="item" style="padding-bottom: 0;">
                                             <i class="wallet icon"></i>
                                             <div class="content">
@@ -1049,7 +1059,7 @@
             <div class="description">
                 <div class="ui center aligned basic segment">
 
- <div class="ui segment">
+                    <div class="ui segment">
                         <div class="ui three column very relaxed grid">
                             <div class="column" style="padding-left: 0;padding-right: 0">
                                 <a onclick="printInvoiceA4()" style="cursor: pointer;">
@@ -1062,12 +1072,14 @@
                                     <i class="print icon" style="font-size: 2rem"></i>
                                     <p>Print Invoice A5</p>
                                 </a>
-                            </div><div class="column" style="padding-left: 0;padding-right: 0">
+                            </div>
+                            <div class="column" style="padding-left: 0;padding-right: 0">
                                 <a onclick="printBillA4()" style="cursor: pointer;">
                                     <i class="print icon" style="font-size: 2rem"></i>
                                     <p>Print Bill A4</p>
                                 </a>
-                            </div><div class="column" style="padding-left: 0;padding-right: 0">
+                            </div>
+                            <div class="column" style="padding-left: 0;padding-right: 0">
                                 <a onclick="printBillA55()" style="cursor: pointer;">
                                     <i class="print icon" style="font-size: 2rem"></i>
                                     <p>Print Bill A5</p>
@@ -1097,7 +1109,7 @@
     <div class="ui tiny modal" id="Reminder">
         <i class="close icon"></i>
         <div class="header">
-            Add Reminder Note  {{ reminder.dueDate|date:'D/m/Y' }}
+            Add Reminder Note {{ reminder.dueDate|date:'D/m/Y' }}
         </div>
         <div class="image content">
             <div class="description">
@@ -1116,11 +1128,11 @@
                         <div class="sixteen wide  field">
                             <label>Reminder Note</label>
                             <input list="notes" type="text" name="Reminder Note" placeholder="Reminder Note"
-                                   id="note"  value="{% if reminder != '' %} {{ reminder.remark }} {% endif %}" >
+                                   id="note" value="{% if reminder != '' %} {{ reminder.remark }} {% endif %}">
 
                             <datalist id="notes">
                                 {% for remark in remarks %}
-                                  <option value="{{ remark.remark }}">
+                                    <option value="{{ remark.remark }}">
                                 {% endfor %}
 
 
@@ -1144,53 +1156,54 @@
         </div>
     </div>
 
-<div class="ui modal" id="todayReminderList">
- <i class="close icon"></i>
-  <div class="header">Today's Reminder</div>
-  <div class="scrolling content">
-   <table class="ui very compact blue celled table">
-  <thead>
-    <tr>
-      <th class="sorted descending">Serial No.</th>
-      <th class="">SaleID</th>
-      <th class="">Remark</th>
-      <th class="">Detail</th>
-    </tr>
-  </thead>
-  <tbody>
+    <div class="ui modal" id="todayReminderList">
+        <i class="close icon"></i>
+        <div class="header">Today's Reminder</div>
+        <div class="scrolling content">
+            <table class="ui very compact blue celled table">
+                <thead>
+                <tr>
+                    <th class="sorted descending">Serial No.</th>
+                    <th class="">SaleID</th>
+                    <th class="">Remark</th>
+                    <th class="">Detail</th>
+                </tr>
+                </thead>
+                <tbody>
 
-{% for foo in reminderList %}
- <tr>
-      <td>{{ forloop.counter }}</td>
-      <td>{{ foo.salesID.pk|stringformat:"05d" }}</td>
-      <td>{{ foo.remark }}</td>
-      <td>
-      <button style="font-size:10px;" onclick="GetSaleDetail({{ foo.salesID.pk }})" class="ui circular  icon button green" autocomplete="off">
-                               <i class="receipt icon"></i>
-                             </button>
-      </td>
-    </tr>
-{% endfor %}
+                {% for foo in reminderList %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ foo.salesID.pk|stringformat:"05d" }}</td>
+                        <td>{{ foo.remark }}</td>
+                        <td>
+                            <button style="font-size:10px;" onclick="GetSaleDetail({{ foo.salesID.pk }})"
+                                    class="ui circular  icon button green" autocomplete="off">
+                                <i class="receipt icon"></i>
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
 
 
+                </tbody>
 
-  </tbody>
-
-</table>
-  </div>
+            </table>
+        </div>
         <div class="actions">
             <div class="ui black deny button">
                 Close
             </div>
 
         </div>
-</div>
+    </div>
 {% endblock %}
 
 {% block js %}
     <script>
-    $(initVal())
-      function changeProductTypeOnload() {
+        $(initVal())
+
+        function changeProductTypeOnload() {
             pType = $('#pType').val();
 
             if (pType === 'Jet') {
@@ -1204,8 +1217,7 @@
                 $('#defaultInvoiceSeries').html('N/A');
                 $('#invoiceSeriesID').val('N/A');
 
-            }
-            else {
+            } else {
                 proSearch()
                 $('#invoiceNo').val('').attr('readonly', true).css('background-color', 'white');
                 $('#GST').val('0').attr('readonly', true).css('background-color', 'lightgray');
@@ -1218,27 +1230,26 @@
         }
 
 
+        function initVal() {
+            $('#address').val('{{ sale.customerAddress }}');
+            $('#state').val('{{ sale.customerState }}');
+            $('#company').val('{{ sale.companyID_id }}');
+            $('#pType').val('{{ sale.salesType }}');
+            $('[name=payment]').val(['{{ sale.paymentType }}']);
+            changeProductTypeOnload();
 
 
-    function initVal() {
-        $('#address').val('{{ sale.customerAddress }}');
-        $('#state').val('{{ sale.customerState }}');
-        $('#company').val('{{ sale.companyID_id }}');
-        $('#pType').val('{{ sale.salesType }}');
-        $('[name=payment]').val(['{{ sale.paymentType }}']);
-        changeProductTypeOnload();
+        }
 
-
-    }
         $('.menu .item').tab();
         $('.ui.radio.checkbox').checkbox();
         var today = new Date();
         $('#standard_calendar')
             .calendar({
-                    initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
-                    monthFirst: false,
-                    type: 'date',
-                    formatter: {
+                initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
+                monthFirst: false,
+                type: 'date',
+                formatter: {
                         date: function (date, settings) {
 
                             if (!date) return '';
@@ -1274,9 +1285,9 @@
             );
         $('#calenderDue')
             .calendar({
-                {% if reminder == '' %}
-                    initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
-    {% endif %}
+                    {% if reminder == '' %}
+                        initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
+                    {% endif %}
                     monthFirst: false,
                     type: 'date',
                     formatter: {
@@ -1297,7 +1308,8 @@
 
         var pType;
         pType = $('#pType').val();
-{#        $(changeProductType())#}
+        {#        $(changeProductType())#}
+
         function changeProductType() {
             pType = $('#pType').val();
             $('#itemTable tbody tr').remove();
@@ -1322,8 +1334,7 @@
                 $('#defaultInvoiceSeries').html('N/A');
                 $('#invoiceSeriesID').val('N/A');
 
-            }
-            else {
+            } else {
                 $('#productForm').trigger('reset');
                 proSearch()
                 $('#invoiceNo').val('').attr('readonly', true).css('background-color', 'white');
@@ -1399,8 +1410,7 @@
 
                     if (response.data['SaleID'] === 'N/A') {
                         $('#getLastSale').html('');
-                    }
-                    else {
+                    } else {
                         $('#getLastSale').html('');
                         $('#getLastSale').append('<button onclick="GetSaleDetail(' + response.data['SaleID'] + ')" class="fluid mini ui purple button" > <i class="scroll icon"></i> View Last Sale </button>')
 
@@ -1470,8 +1480,7 @@
                         $('#unit').val(response.data['ActualUnit']);
                         $('#netPrice').val(response.data['Net']);
                         $('#Price').val(response.data['Net']);
-                    }
-                    else {
+                    } else {
                         $('#itemID').val(response.data['ID']);
                         $('#productName').val(response.data['ProductName']);
 
@@ -1504,8 +1513,7 @@
             if (p === 'n') {
                 $('#days').css('display', 'none')
                 $('#cheque').css('display', 'none')
-            }
-            else if (p === 'y') {
+            } else if (p === 'y') {
                 $('#days').css('display', '')
                 $('#cheque').css('display', 'none')
             } else {
@@ -1581,7 +1589,7 @@
 
 
         });
-           $("#personalDiscount").keyup(function () {
+        $("#personalDiscount").keyup(function () {
             calTaxAndTotal();
             returnCalc();
 
@@ -1597,8 +1605,7 @@
             if (dueOrReturn < 0) {
                 $('#returnLabel').html('Due')
 
-            }
-            else {
+            } else {
                 $('#returnLabel').html('Return')
             }
 
@@ -1659,8 +1666,7 @@
                         message: 'Product Name, Category, Quantity and Total are required !'
                     })
                 ;
-            }
-            else {
+            } else {
                 $('#' + itemID).remove();
                 $('#itemTable tbody').append('<tr id ="' + itemID + '" ><td id ="row' + itemID + '">#</td> <td id ="product' + itemID + '">' + productName + '</td><td id ="category' + itemID + '">' + category + '</td><td id ="hsn' + itemID + '">' + hsn + '</td><td id ="quantity' + itemID + '">' + Quantity + '</td><td id ="unit' + itemID + '">' + Unit + '</td><td id ="price' + itemID + '">' + Price + '</td><td id ="gst' + itemID + '">' + GST + '</td><td id ="disc' + itemID + '">' + disc + '</td><td id ="netprice' + itemID + '">' + NetPrice + '</td><td id ="total' + itemID + '">' + Total + '</td><td><button style="font-size:10px;" onclick="GetItemDetail(' + itemID + ')" class="ui circular facebook icon button green"><i class="pen icon"></i></button><button style="font-size:10px;" onclick="delItem(' + itemID + ')" class="ui circular youtube icon button"><i class="trash alternate icon"></i></button></td></tr>');
                 ClearData();
@@ -1740,8 +1746,7 @@
                         message: 'Product Name, Category, Quantity and Total are required !'
                     })
                 ;
-            }
-            else {
+            } else {
                 $('#product' + id).html(productName);
                 $('#category' + id).html(category);
                 $('#hsn' + id).html(hsn);
@@ -1774,6 +1779,7 @@
 
 
         }
+
         function ClearData() {
 
             $('#addItemBtn').css('display', '');
@@ -1850,7 +1856,7 @@
             $('#roundOff').html(roundOfNumber.toFixed(2))
 
 
-            var grandTotal = parseFloat(taxPlusGst) + parseFloat(otherCharges)- parseFloat(personalDiscount) + parseFloat(roundOfNumber.toFixed(2));
+            var grandTotal = parseFloat(taxPlusGst) + parseFloat(otherCharges) - parseFloat(personalDiscount) + parseFloat(roundOfNumber.toFixed(2));
 
 
             $('#GrandTotal').html(grandTotal.toFixed(2))
@@ -1865,6 +1871,7 @@
             ;
 
         }
+
         function AddReminder() {
 
             $('#Reminder')
@@ -1872,6 +1879,7 @@
             ;
 
         }
+
         function openReminder() {
 
             $('#todayReminderList')
@@ -1879,6 +1887,7 @@
             ;
 
         }
+
         //post
         function salesSave() {
             var personalDiscount = $('#personalDiscount').html();
@@ -1940,7 +1949,7 @@
             var otherCharges = $('#otherCharges').html();
 
             var GrandTotal = $('#GrandTotal').html();
-                        var dueDate = $('#dueDate').val();
+            var dueDate = $('#dueDate').val();
             var note = $('#note').val();
             if (name === '' || pDate === '' || subTotal === '' || taxable === '' || totalFinal === '' ||
                 roundOff === '' || taxableGST === '' || bill_disc === '' || GrandTotal === '' || datas === '') {
@@ -2015,7 +2024,7 @@
                             $('#formtest2').trigger('reset');
                             $('#formtest3').trigger('reset');
                             $('#AddCompanyForm').trigger('reset');
-                                                        $('#AddReminderForm').trigger('reset');
+                            $('#AddReminderForm').trigger('reset');
 
                             $('#subTotal').html('0.00');
                             $('#taxable').html('0.00');
@@ -2051,8 +2060,7 @@
                             $('#printSaleID').val(response.saleID)
 
 
-                        }
-                        else {
+                        } else {
                             $('body')
                                 .toast({
                                     class: 'error',
@@ -2122,7 +2130,7 @@
                     $('#PaidAgainstBill').html(response.data.Basic['PaidAgainstBill']);
                     $('#AddedBy').html(response.data.Basic['AddedBy']);
                     $('#sPersonalDiscount').html(response.data.Basic['PersonalDiscount']);
-                    $('#billDetail').html("(#"+response.data.Basic['BillNumber']+"-"+response.data.Basic['BillType']+")" );
+                    $('#billDetail').html("(#" + response.data.Basic['BillNumber'] + "-" + response.data.Basic['BillType'] + ")");
 
 
                     var i;
@@ -2148,17 +2156,20 @@
             ;
 
         }
+
         function printInvoice() {
             var id = $('#salesID').val();
             window.open('/print/?q=' + id, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
         }
+
         function printBill() {
             var id = $('#salesID').val();
             window.open('/printBill/?q=' + id, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
         }
-             function printInvoicea5() {
+
+        function printInvoicea5() {
             var id = $('#salesID').val();
             window.open('/print_invoicea5/?q=' + id, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
@@ -2169,13 +2180,15 @@
             window.open('/print_billA5/?q=' + id, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
         }
-            function printBillThermals() {
-                    var id = $('#salesID').val();
-                    window.open('/print_bill_thermal/?q=' + id, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
-                }
+        function printBillThermals() {
+            var id = $('#salesID').val();
+            window.open('/print_bill_thermal/?q=' + id, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+
+        }
 
         $(getInvoiceSeries());
+
         function getInvoiceSeries() {
             var company = $('#company').val();
             pType = $('#pType').val();
@@ -2210,13 +2223,13 @@
                         ;
                     }
                 });
-            }
-            else {
+            } else {
                 $('#defaultInvoiceSeries').html('N/A');
                 $('#invoiceSeriesID').val('N/A');
             }
 
         }
+
         function getInvoiceNumber(id) {
 
             $.ajax({
@@ -2240,12 +2253,14 @@
                 }
             });
         }
+
         $('.custom.button')
             .popup({
                 popup: $('.custom.popup'),
                 on: 'click'
             })
         ;
+
         function getProductStock() {
             pType = $('#pType').val();
             var company = $('#company').val();
@@ -2264,8 +2279,7 @@
                             $('#runningStock').append('  <div class="item"><div class="content"><h5 class="ui sub header">' + response.data[j]["ProductName"] + '</h5> <div class="meta"> <span class="cinema">Stock Avialable: <div class="ui label">' + response.data[j]["Stock"] + '</div></span> </div> </div></div>');
 
                         }
-                    }
-                    else {
+                    } else {
                         $('#runningStock').append('  <div class="sub header">Stock available .</div>')
                     }
 
@@ -2283,6 +2297,7 @@
 
 
         }
+
         function getProductLSP() {
             var customerID = $('#customerID').val();
             var itemID = $('#itemID').val();
@@ -2311,9 +2326,11 @@
 
 
         }
+
         function openProduct() {
             window.open('{% url "homeApp:product" %}', 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
         }
+
         function openCategory() {
             window.open('{% url "homeApp:hsn" %}', 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
         }
@@ -2452,10 +2469,7 @@
                             window.location.href = '/sales/'
 
 
-
-
-                        }
-                        else {
+                        } else {
                             $('body')
                                 .toast({
                                     class: 'error',
@@ -2482,7 +2496,7 @@
 
         }
 
-         function PrintOption() {
+        function PrintOption() {
 
             $('#PrintOption')
                 .modal('show')
@@ -2490,28 +2504,32 @@
 
         }
 
-           function printInvoiceA4() {
+        function printInvoiceA4() {
             var ID = $('#printSaleID').val()
             window.open('/print/?q=' + ID, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
 
         }
+
         function printInvoiceA5() {
             var ID = $('#printSaleID').val()
             window.open('/print_invoicea5/?q=' + ID, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
 
         }
+
         function printBillA4() {
             var ID = $('#printSaleID').val()
             window.open('/printBill/?q=' + ID, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
         }
+
         function printBillA55() {
             var ID = $('#printSaleID').val()
             window.open('/print_billA5/?q=' + ID, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 
         }
+
         function printBillThermal() {
             var ID = $('#printSaleID').val()
             window.open('/print_bill_thermal/?q=' + ID, 'popUpWindow', 'height=screen.availHeight,width=screen.availWidth,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
@@ -2523,19 +2541,36 @@
 
         }
 
-            $(document).on('keypress', '#phone', function (e) {
-    if (e.which == 13) {
-        e.preventDefault();
-        $('#productName').focus();
-    }
-});
-
-    $(document).on('keypress', '#netPrice', function (e) {
-    if (e.which == 13) {
-        e.preventDefault();
-        addSubItems();
-        $('#productName').focus();
-    }
-});
+        $(document).on('keypress', '#phone', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                $('#productName').focus();
+            }
+        });
+        $(document).on('keypress', '#gst', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                $('#productName').focus();
+            }
+        });
+        $(document).on('keypress', '#email', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                $('#productName').focus();
+            }
+        });
+        $(document).on('keypress', '#address', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                $('#productName').focus();
+            }
+        });
+        $(document).on('keypress', '#netPrice', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                addSubItems();
+                $('#productName').focus();
+            }
+        });
     </script>
 {% endblock %}

@@ -31,8 +31,8 @@
     </style>
 
     <div class="ui right aligned basic segment">
-    {% comment %}    <div class="ui internally grid">
-            <div class="row" style="padding-bottom: 0!important;padding-top: 0!important;">
+        <div class="ui internally grid" style="margin-bottom: 10px;">
+            <div class="row" style="padding-bottom: 0!important;padding-top: 5px!important;">
 
                 <div class="eight wide column">
                     <div class="ui form">
@@ -49,7 +49,8 @@
                                     <div class="field">
                                         <div class="ui calendar" id="rangestart">
                                             <div class="ui input left icon">
-                                                <input class="" type="text" placeholder="Start Date" style="width:100%;"
+                                                <input class="" type="text" placeholder="Start Date"
+                                                       style="width:100%;"
                                                        id="startDateF">
                                             </div>
                                         </div>
@@ -57,7 +58,8 @@
                                     <div class="field">
                                         <div class="ui calendar" id="rangeend">
                                             <div class="ui input left icon">
-                                                <input class="" type="text" placeholder="End Date" style="width:100%;"
+                                                <input class="" type="text" placeholder="End Date"
+                                                       style="width:100%;"
                                                        id="endDateF">
                                             </div>
                                         </div>
@@ -82,7 +84,6 @@
 
             </div>
         </div>
-{% endcomment %}
         <div class="ui internally celled grid">
 
             <div class="row">
@@ -132,10 +133,10 @@
     <script src="{% static 'table/buttons.colVis.min.js' %}"></script>
     <script>
         $('.menu .item').tab();
-{% comment %}        $('#standard_calendar')
+        $('#standard_calendar')
             .calendar({
                     monthFirst: false,
-                    type: 'date',
+                    type: 'day',
                     formatter: {
                         date: function (date, settings) {
                             if (!date) return '';
@@ -148,11 +149,10 @@
                 }
             );
         var today = new Date();
-
         $('#rangestart').calendar({
             initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
             monthFirst: false,
-            type: 'date',
+            type: 'day',
             endCalendar: $('#rangeend'),
             formatter: {
                 date: function (date, settings) {
@@ -167,7 +167,7 @@
         $('#rangeend').calendar({
             initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
             monthFirst: false,
-            type: 'date',
+            type: 'day',
             startCalendar: $('#rangestart'),
             formatter: {
                 date: function (date, settings) {
@@ -179,9 +179,40 @@
                 }
             }
         });
-        {% endcomment %}
+
+        $('#rangestartProduct').calendar({
+            initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
+            monthFirst: false,
+            type: 'day',
+            endCalendar: $('#rangeendProduct'),
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                }
+            }
+        });
+        $('#rangeendProduct').calendar({
+            initialDate: today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear(),
+            monthFirst: false,
+            type: 'day',
+            startCalendar: $('#rangestartProduct'),
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                }
+            }
+        });
         $(getPurchase());
         var purchaseTab;
+
         function getPurchase() {
 
             var startDate = $('#startDateF').val();
@@ -222,7 +253,7 @@
                 "pageLength": 8,
                 "processing": true,
                 "serverSide": false,
-                "ajax": '{% url 'homeApp:CustomerDueListJson' %}'
+                "ajax": '{% url 'homeApp:CustomerDueListJson' %}?startDate=' + startDate + '&endDate=' + endDate
             });
         }
 

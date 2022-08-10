@@ -1,3 +1,5 @@
+import calendar
+
 from django.core import management
 from django.db import transaction
 from django.db.models import Q, Sum, F
@@ -1243,13 +1245,19 @@ class CustomerDueListJson(BaseDatatableView):
         return qs
 
     def prepare_results(self, qs):
+        startDateV = self.request.GET.get("startDate")
+        endDateV = self.request.GET.get("endDate")
+        startDate = datetime.strptime(startDateV, '%d/%m/%Y')
+        endDate = datetime.strptime(endDateV, '%d/%m/%Y')
         json_data = []
         for item in qs:
             if item.address is None:
                 address = 'N/A'
             else:
                 address = item.address
-            sale = Sales.objects.filter(isDeleted__exact=False, customerID_id=item.pk, )
+            sale = Sales.objects.filter(Q(customerID_id=item.pk) | Q(customerName__iexact=item.name),
+                                        isDeleted__exact=False,
+                                        invoiceDate__range=(startDate.date(), endDate.date() + timedelta(days=1)))
 
             # pay = TakePayment.objects.filter(customerID_id=item.pk)
             action = '''<a href="/contact/customer_ledger/{}/" style="font-size:10px;"  class="ui circular facebook icon button violet">
