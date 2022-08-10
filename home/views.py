@@ -1,8 +1,7 @@
-import calendar
-
 from django.core import management
 from django.db import transaction
 from django.db.models import Q, Sum, F
+from django.db.models.functions import Lower
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.template.defaultfilters import register
@@ -1235,12 +1234,19 @@ class CustomerDueListJson(BaseDatatableView):
     order_columns = ['name', 'address', 'address']
 
     def get_initial_queryset(self):
-        return Customer.objects.filter(isDeleted__exact=False)
+        startDateV = self.request.GET.get("startDate")
+        endDateV = self.request.GET.get("endDate")
+        startDate = datetime.strptime(startDateV, '%d/%m/%Y')
+        endDate = datetime.strptime(endDateV, '%d/%m/%Y')
+        # return Customer.objects.filter(isDeleted__exact=False).order_by(Lower('name'))
+        return Sales.objects.filter(isDeleted__exact=False,
+                                    invoiceDate__range=(startDate.date(), endDate.date()))
 
     def filter_queryset(self, qs):
         search = self.request.GET.get('search[value]', None)
         if search:
-            qs = qs.filter(Q(name__icontains=search) | Q(address__icontains=search) | Q(phone__icontains=search))
+            qs = qs.filter(Q(customerName__icontains=search) | Q(customerPhone__icontains=search) | Q(
+                customerAddress__icontains=search))
 
         return qs
 
@@ -1249,17 +1255,19 @@ class CustomerDueListJson(BaseDatatableView):
         endDateV = self.request.GET.get("endDate")
         startDate = datetime.strptime(startDateV, '%d/%m/%Y')
         endDate = datetime.strptime(endDateV, '%d/%m/%Y')
+
         json_data = []
         for item in qs:
+            print(item.customerName)
+
             if item.address is None:
                 address = 'N/A'
             else:
                 address = item.address
             sale = Sales.objects.filter(Q(customerID_id=item.pk) | Q(customerName__iexact=item.name),
                                         isDeleted__exact=False,
-                                        invoiceDate__range=(startDate.date(), endDate.date() + timedelta(days=1)))
+                                        invoiceDate__range=(startDate.date(), endDate.date()))
 
-            # pay = TakePayment.objects.filter(customerID_id=item.pk)
             action = '''<a href="/contact/customer_ledger/{}/" style="font-size:10px;"  class="ui circular facebook icon button violet">
                             <i class="scroll icon"></i>
                           </a>
@@ -1271,15 +1279,11 @@ class CustomerDueListJson(BaseDatatableView):
                 for s in sale:
                     paid = paid + s.paidAgainstBill
                     total = total + s.grandTotal
-
-                # for p in pay:
-                #     paid = paid + p.amount
-
                 due = total - paid
                 json_data.append([
-                    escape(item.name),
-                    address,
-                    escape(item.phone),
+                    escape(item.customerName),
+                    escape(item.customerAddress),
+                    escape(item.customerPhone),
                     escape(total),
                     escape(paid),
                     escape(due),
@@ -1887,14 +1891,13 @@ class SalesListByProductJson(BaseDatatableView):
 
         if 'Admin' in self.request.user.groups.values_list('name', flat=True):
             return SalesProduct.objects.filter(salesID__isDeleted__exact=False,
-                                               salesID__invoiceDate__gte=startDate.date(),
-                                               salesID__invoiceDate__lte=endDate.date() + timedelta(days=1))
+                                               salesID__invoiceDate__range=(startDate.date(), endDate.date())
+                                               )
         else:
             user = CompanyUser.objects.get(user_ID=self.request.user.pk)
             return SalesProduct.objects.filter(salesID__isDeleted__exact=False,
                                                salesID__companyID_id=user.company_ID_id,
-                                               salesID__invoiceDate__gte=startDate.date(),
-                                               salesID__invoiceDate__lte=endDate.date() + timedelta(days=1))
+                                               salesID__invoiceDate__range=(startDate.date(), endDate.date()))
 
     def filter_queryset(self, qs):
         search = self.request.GET.get('search[value]', None)
@@ -1972,13 +1975,12 @@ class SalesListJson(BaseDatatableView):
         endDate = datetime.strptime(eDate, '%d/%m/%Y')
 
         if 'Admin' in self.request.user.groups.values_list('name', flat=True):
-            return Sales.objects.filter(isDeleted__exact=False, invoiceDate__gte=startDate.date(),
-                                        invoiceDate__lte=endDate.date() + timedelta(days=1))
+            return Sales.objects.filter(isDeleted__exact=False,
+                                        invoiceDate__range=(startDate.date(), endDate.date()))
         else:
             user = CompanyUser.objects.get(user_ID=self.request.user.pk)
             return Sales.objects.filter(isDeleted__exact=False, companyID_id=user.company_ID_id,
-                                        invoiceDate__gte=startDate.date(),
-                                        invoiceDate__lte=endDate.date() + timedelta(days=1))
+                                        invoiceDate__range=(startDate.date(), endDate.date()))
 
     def filter_queryset(self, qs):
         search = self.request.GET.get('search[value]', None)
@@ -2932,13 +2934,12 @@ class PurchaseListJson(BaseDatatableView):
         startDate = datetime.strptime(sDate, '%d/%m/%Y')
         endDate = datetime.strptime(eDate, '%d/%m/%Y')
         if 'Admin' in self.request.user.groups.values_list('name', flat=True):
-            return Purchase.objects.filter(isDeleted__exact=False, invoiceDate__gte=startDate.date(),
-                                           invoiceDate__lte=endDate.date() + timedelta(days=1))
+            return Purchase.objects.filter(isDeleted__exact=False,
+                                           invoiceDate__range=(startDate.date(), endDate.date()))
         else:
             user = CompanyUser.objects.get(user_ID=self.request.user.pk)
             return Purchase.objects.filter(isDeleted__exact=False, companyID_id=user.company_ID_id,
-                                           invoiceDate__gte=startDate.date(),
-                                           invoiceDate__lte=endDate.date() + timedelta(days=1))
+                                           invoiceDate__range=(startDate.date(), endDate.date()))
 
     def filter_queryset(self, qs):
 
@@ -3189,8 +3190,8 @@ class ExpenseListJson(BaseDatatableView):
         startDate = datetime.strptime(sDate, '%d/%m/%Y')
         endDate = datetime.strptime(eDate, '%d/%m/%Y')
 
-        return Expense.objects.filter(isDeleted__exact=False, expenseDate__gte=startDate.date(),
-                                      expenseDate__lte=endDate.date() + timedelta(days=1))
+        return Expense.objects.filter(isDeleted__exact=False,
+                                      expenseDate__range=(startDate.date(), endDate.date()))
 
     def filter_queryset(self, qs):
 
@@ -3399,9 +3400,9 @@ def download_expense_report(request):
     workbook = xlsxwriter.Workbook(response, {'in_memory': True})
     worksheet = workbook.add_worksheet()
 
-    ex = Expense.objects.filter(isDeleted__exact=False, expenseDate__gte=startDate.date(),
-                                expenseDate__lte=endDate.date() + timedelta(days=1), expenseType=eType,
-                                companyID_id=int(companyID))
+    ex = Expense.objects.filter(isDeleted__exact=False, expenseType=eType,
+                                companyID_id=int(companyID),
+                                expenseDate__range=(startDate.date(), endDate.date()))
 
     bold = workbook.add_format({'bold': True})
     worksheet.write('A1', 'Serial No.', bold)
@@ -3546,9 +3547,9 @@ def download_sales_report(request):
     workbook = xlsxwriter.Workbook(response, {'in_memory': True})
     worksheet = workbook.add_worksheet()
 
-    pur = Sales.objects.filter(isDeleted__exact=False, invoiceDate__gte=startDate.date(),
-                               invoiceDate__lte=endDate.date() + timedelta(days=1), salesType=eType,
-                               companyID_id=int(companyID))
+    pur = Sales.objects.filter(isDeleted__exact=False, salesType=eType,
+                               companyID_id=int(companyID),
+                               invoiceDate__range=(startDate.date(), endDate.date()))
 
     bold = workbook.add_format({'bold': True})
     worksheet.write('A1', 'Serial No.', bold)
@@ -3866,13 +3867,13 @@ class BookingListJson(BaseDatatableView):
         endDate = datetime.strptime(eDate, '%d/%m/%Y')
 
         if 'Admin' in self.request.user.groups.values_list('name', flat=True):
-            return SalesLater.objects.filter(isDeleted__exact=False, invoiceDate__gte=startDate.date(),
-                                             invoiceDate__lte=endDate.date() + timedelta(days=1))
+            return SalesLater.objects.filter(isDeleted__exact=False,
+                                             invoiceDate__range=(startDate.date(), endDate.date())
+                                             )
         else:
             user = CompanyUser.objects.get(user_ID=self.request.user.pk)
             return SalesLater.objects.filter(isDeleted__exact=False, companyID_id=user.company_ID_id,
-                                             invoiceDate__gte=startDate.date(),
-                                             invoiceDate__lte=endDate.date() + timedelta(days=1))
+                                             invoiceDate__range=(startDate.date(), endDate.date()))
 
     def filter_queryset(self, qs):
         search = self.request.GET.get('search[value]', None)
@@ -4494,9 +4495,8 @@ class ReminderListJson(BaseDatatableView):
         eDate = self.request.GET.get('endDate')
         startDate = datetime.strptime(sDate, '%d/%m/%Y')
         endDate = datetime.strptime(eDate, '%d/%m/%Y')
-
-        return ReminderSale.objects.filter(isDeleted__exact=False, dueDate__gte=startDate.date(),
-                                        dueDate__lte=endDate.date() + timedelta(days=1))
+        return ReminderSale.objects.filter(isDeleted__exact=False,
+                                           dueDate__range=(startDate.date(), endDate.date()))
 
 
     def filter_queryset(self, qs):
@@ -4536,3 +4536,43 @@ class ReminderListJson(BaseDatatableView):
             ])
         return json_data
 
+
+def get_customer_due_list_by_date_range(request):
+    sDate = request.GET.get('startDate')
+    eDate = request.GET.get('endDate')
+    startDate = datetime.strptime(sDate, '%d/%m/%Y')
+    endDate = datetime.strptime(eDate, '%d/%m/%Y')
+
+    sale = Sales.objects.filter(isDeleted__exact=False,
+                                invoiceDate__range=(startDate.date(), endDate.date()))
+    c_list = []
+    for s in sale:
+        c_list.append(s.customerID.pk)
+    json_data = []
+    for c in set(c_list):
+        sale_list = Sales.objects.filter(customerID_id=c,
+                                         isDeleted__exact=False,
+                                         invoiceDate__range=(startDate.date(), endDate.date()))
+
+        action = '''<a href="/contact/customer_ledger/{}/" style="font-size:10px;"  class="ui circular facebook icon button violet">
+                        <i class="scroll icon"></i>
+                      </a>
+        
+                     '''.format(c),
+        if sale_list.count() > 0:
+            paid = 0.0
+            total = 0.0
+            for ns in sale_list:
+                paid = paid + ns.paidAgainstBill
+                total = total + ns.grandTotal
+            due = total - paid
+            json_data.append([
+                escape(ns.customerName),
+                escape(ns.customerAddress),
+                escape(ns.customerPhone),
+                escape(total),
+                escape(paid),
+                escape(due),
+                action,
+            ])
+    return JsonResponse({'data': json_data}, safe=False)

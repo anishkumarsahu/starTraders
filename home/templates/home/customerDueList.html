@@ -249,18 +249,18 @@
 
                 ],
                 aaSorting: [[0, 'asc']],
-                "lengthMenu": [[8, 25, 50, 100, -1], [8, 25, 50, 100, "All"]],
-                "pageLength": 8,
+                "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
+                "pageLength": 25,
                 "processing": true,
                 "serverSide": false,
-                "ajax": '{% url 'homeApp:CustomerDueListJson' %}?startDate=' + startDate + '&endDate=' + endDate
+                "ajax": '{% url 'homeApp:get_customer_due_list_by_date_range' %}?startDate=' + startDate + '&endDate=' + endDate
             });
         }
 
         function filterDetails() {
             var startDate = $('#startDateF').val();
             var endDate = $('#endDateF').val();
-            purchaseTab.ajax.url('{% url 'homeApp:CustomerDueListJson' %}?startDate=' + startDate + '&endDate=' + endDate).load();
+            purchaseTab.ajax.url('{% url 'homeApp:get_customer_due_list_by_date_range' %}?startDate=' + startDate + '&endDate=' + endDate).load();
 
         }
 

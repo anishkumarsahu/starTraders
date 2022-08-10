@@ -36,6 +36,8 @@ urlpatterns = [
     # customer
     url(r'^CustomerListJson/$', CustomerListJson.as_view(), name='CustomerListJson'),
     url(r'^CustomerDueListJson/$', CustomerDueListJson.as_view(), name='CustomerDueListJson'),
+    url(r'^get_customer_due_list_by_date_range/$', get_customer_due_list_by_date_range,
+        name='get_customer_due_list_by_date_range'),
 
     url(r'^api/PostCustomerDetail/$', post_customer, name='post_customer'),
     url(r'^api/GetCustomerList/$', get_customer_list, name='get_customer_list'),
